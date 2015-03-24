@@ -1,0 +1,16 @@
+mail.starttls.enable=true
+mail.auth=true
+mail.host=dhn-mailrelay.emea.nsn-intra.net
+mail.port=25
+mail.to=jerry.1.zhang@nsn.com
+			
+svn.rep.url=https://svne1.access.nsn.com/isource/svnroot/mocrrepository
+svn.username=n2zhang
+svn.password=companyname125
+
+path.rep=/opt/web/companyname-projectname-mocr/resources/svn_temp
+path.xml=/opt/web/companyname-projectname-mocr/resources/svn_temp/objectclasses.xml
+path.json=/opt/web/companyname-projectname-mocr/resources/svn_temp/morstatus.json
+
+web.hostname=cspbj.emea.nsn-net.net
+

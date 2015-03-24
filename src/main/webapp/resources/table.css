@@ -1,0 +1,39 @@
+.CSSTableGenerator {
+	margin:0px;padding:0px;
+	width:80%;
+	box-shadow: 10px 10px 5px #888888;
+	border:1px solid #000000;
+	
+}.CSSTableGenerator table{
+    border-collapse: collapse;
+    border-spacing: 0;
+	margin:0px;padding:0px;
+}
+.CSSTableGenerator tr:nth-child(odd){ background-color:#f4f3f2; }
+.CSSTableGenerator tr:nth-child(even){ background-color:#ffffff; }
+.CSSTableGenerator td{
+	vertical-align:middle;
+	border:1px solid #000000;
+	border-width:0px 1px 1px 0px;
+	text-align:left;
+	
+	font-size:9px;
+	font-family:Arial;
+	font-weight:normal;
+	color:#000000;
+}.CSSTableGenerator tr:first-child td{
+	background:-o-linear-gradient(bottom, #e2d9d0 5%, #e5dfda 100%);	
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #e2d9d0), color-stop(1, #e5dfda) );
+	background:-moz-linear-gradient( center top, #e2d9d0 5%, #e5dfda 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#e2d9d0", endColorstr="#e5dfda");	
+	background: -o-linear-gradient(top,#e2d9d0,e5dfda);
+
+	background-color:#e2d9d0;
+	border:0px solid #000000;
+	text-align: center;
+	border-width:0px 0px 1px 1px;
+	font-size:9px;
+	font-family:Arial;
+	font-weight:bold;
+	color:#050404;
+}
