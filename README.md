@@ -1,13 +1,4 @@
-Edit conf files:
-companyname-oss-mocr\src\main\webapp\WEB-INF\spring\appServlet\servlet-context.xml:<context:property-placeholder location="file:/opt/web/companyname-projectname-mocr/resources/application.properties"/>
-
-companyname-oss-mocr\src\main\resources\logback.xml
-
-companyname-oss-mocr\resources\application.properties
-
-/user/local/tomcat7/apache-tomcat-7.0.57/webapps
-
-/opt/web/companyname-projectname-mocr
+This application is a project using Spring MVC.
 
 To run the application:
 -------------------	
@@ -18,14 +9,24 @@ From the command line with Maven:
 
 or
 
-In your preferred IDE such as SpringSource Tool Suite (STS) or IDEA:
+In your preferred IDE such as Eclipse:
 
+    $ cd companyname-projectname-mocr
+    $ mvn eclipse:eclipse
+	
 * Import companyname-projectname-mocr as a Maven Project
-* Drag-n-drop the project onto the "SpringSource tc Server Developer Edition" or another Servlet 2.5 or > Server to run, such as Tomcat.
 
 Access the deployed web application at: http://localhost:8080/companyname-projectname-mocr
 
 Note:
 -------------------
 
+If you want to deploy this project to Linux server, you might need to edit conf files:
+companyname-oss-mocr\src\main\webapp\WEB-INF\spring\appServlet\servlet-context.xml:<context:property-placeholder location="file:/opt/web/companyname-projectname-mocr/resources/application.properties"/>
+companyname-oss-mocr\src\main\resources\logback.xml
+companyname-oss-mocr\resources\application.properties
+
+
+/user/local/tomcat7/apache-tomcat-7.0.57/webapps
+/opt/web/companyname-projectname-mocr
 

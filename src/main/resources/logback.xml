@@ -6,8 +6,8 @@
   </appender>
   
   <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-     <file>/opt/web/companyname-projectname-mocr/log/oss_activity0_0.log</file>
-     <!--<file>oss_activity0_0.log</file> -->
+     <!--<file>/opt/web/companyname-projectname-mocr/log/activity0_0.log</file>-->
+     <file>activity0_0.log</file>
     <append>true</append>
     <encoder>
       <pattern>%d{YYYY/MM/dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>

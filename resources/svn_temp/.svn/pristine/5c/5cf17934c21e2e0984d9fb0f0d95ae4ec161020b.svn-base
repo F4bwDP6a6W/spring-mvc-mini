@@ -1,4 +1,0 @@
-objectclasses.cf is the old file which to track MOCR history.
-objectclasses.xml is new file to track MOCR history now.
-objectclasses.xsd is the schema file to validate objectclasses.xml.
-objclass2xml_v2.sh is the script file to convert objectclasses.cf to objectclasses.xml.

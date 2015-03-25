@@ -15,8 +15,8 @@
 	<context:annotation-config/>
 	<context:component-scan base-package="com.companyname.projectname.mocr" />
 	
-	<context:property-placeholder location="file:/opt/web/companyname-projectname-mocr/resources/application.properties"/>
-	<!--<context:property-placeholder location="file:resources/application.properties"/>--> 
+	<!--<context:property-placeholder location="file:/opt/web/companyname-projectname-mocr/resources/application.properties"/>--> 
+	<context:property-placeholder location="file:resources/application.properties"/>
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven conversion-service="conversionService">
