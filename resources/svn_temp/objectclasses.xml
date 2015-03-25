@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<objectclasses>
+<!-- #    TOO, 2014.12.23 hoo  -->
+<objclass abbrev="FOO" adaID="FOO" id="FOO" intclass="1" name="FOO" parents="TOO"/>
+</objectclasses>
