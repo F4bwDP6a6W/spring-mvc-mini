@@ -9,7 +9,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
-<beans:bean id="schedulingTest" class="com.companyname.projectname.mocr.schedule.ScheduleFileUpdator" />
+<beans:bean id="schedulingTest" class="com.spring.mvc.mini.schedule.ScheduleFileUpdator" />
 
 <task:scheduled-tasks>
     <task:scheduled ref="schedulingTest" method="commitObjectClassXml" cron="0 1 0 * * ?"/>

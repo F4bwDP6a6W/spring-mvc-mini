@@ -9,6 +9,6 @@
 
 	<!-- Maps '/' requests to the 'home' view -->
 	<mvc:view-controller path="/" view-name="home"/>
-	<context:component-scan base-package="com.companyname.projectname.mocr.web" />
+	<context:component-scan base-package="com.spring.mvc.mini.web" />
 	
 </beans>

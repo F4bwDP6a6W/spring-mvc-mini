@@ -2,7 +2,7 @@
 <%@ page session="false" %>
 <html>
 <head>
-	<title>companyname-projectname-mocr</title>
+	<title>spring-mvc-mini</title>
 	<link href="<c:url value="/resources/form.css" />" rel="stylesheet"  type="text/css" />		
 	<link href="<c:url value="/resources/jqueryui/1.8/themes/base/jquery.ui.core.css" />" rel="stylesheet" type="text/css"/>
 	<link href="<c:url value="/resources/jqueryui/1.8/themes/base/jquery.ui.theme.css" />" rel="stylesheet" type="text/css"/>
@@ -16,7 +16,7 @@
 	<meta name="_csrf_header" content="${_csrf.headerName}"/>
 </head>
 <body>
-<h1><a href="<c:url value="/" />">companyname projectname MOCR</a></h1>
+<h1><a href="<c:url value="/" />">spring mvc mini</a></h1>
 <p>Automatical Managed Object Reservation System</p>
 <div id="tabs">
 	<ul>
@@ -26,7 +26,7 @@
         <li><a href="<c:url value="/objectclasslist" />" title="objectclasslist">ObjectClassList</a></li>
     </ul>
 </div>	
-<p>© 2015 companyname. Tech:<a href="http://spring.io/guides">Spring MVC</a>. Support Contact <a href="mailto:jerry.1.zhang@companyname.com">Jerry Zhang</a></p>
+<p>© 2015 spring. Tech:<a href="http://spring.io/guides">Spring MVC</a>. Support Contact <a href="mailto:jerry.1.zhang@spring.com">Jerry Zhang</a></p>
 <script type="text/javascript" src="<c:url value="/resources/jquery/1.6/jquery.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/jqueryform/2.8/jquery.form.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/jqueryui/1.8/jquery.ui.core.js" />"></script>

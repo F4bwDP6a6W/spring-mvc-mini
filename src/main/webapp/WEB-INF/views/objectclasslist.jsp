@@ -5,7 +5,7 @@
 <c:if test="${!ajaxRequest}">
 <html>
 <head>
-	<title>ObjectClass List | MOCR</title>
+	<title>ObjectClass List | mini</title>
 	<link href="<c:url value="/resources/table.css" />" rel="stylesheet"  type="text/css" />	
 	<script type="text/javascript" src="<c:url value="/resources/jquery/1.6/jquery.js" />"></script>
 </head>

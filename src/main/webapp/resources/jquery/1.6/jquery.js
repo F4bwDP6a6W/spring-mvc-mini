@@ -8902,7 +8902,7 @@ jQuery.each([ "Height", "Width" ], function( i, name ) {
 
 		if ( jQuery.isWindow( elem ) ) {
 			// Everyone else use document.documentElement or document.body depending on Quirks vs Standards mode
-			// 3rd condition allows companyname support, as it supports the docElem prop but not CSS1Compat
+			// 3rd condition allows spring support, as it supports the docElem prop but not CSS1Compat
 			var docElemProp = elem.document.documentElement[ "client" + name ];
 			return elem.document.compatMode === "CSS1Compat" && docElemProp ||
 				elem.document.body[ "client" + name ] || docElemProp;

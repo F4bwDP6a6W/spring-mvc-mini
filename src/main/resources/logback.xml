@@ -6,7 +6,7 @@
   </appender>
   
   <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-     <!--<file>/opt/web/companyname-projectname-mocr/log/activity0_0.log</file>-->
+     <!--<file>/opt/web/spring-mvc-mini/log/activity0_0.log</file>-->
      <file>activity0_0.log</file>
     <append>true</append>
     <encoder>
