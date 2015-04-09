@@ -1,12 +1,12 @@
 Spring-mvc-mini is a mini project using Spring MVC.
 -------------------	
 In this project, you can see the code of:
-*spring-webmvc
-*svnkit
-*javax.mail
-*jasypt
-*dom4j
-*spring scheduler
+* spring-webmvc
+* svnkit
+* javax.mail
+* jasypt
+* dom4j
+* spring scheduler
 
 To run the application:
 -------------------	
