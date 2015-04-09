@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.companyname.mocr</groupId>
-	<artifactId>companyname-projectname-mocr</artifactId>
-	<name>companyname-projectname-mocr</name>
+	<groupId>com.cspbj.springmvc</groupId>
+	<artifactId>spring-mvc-mini</artifactId>
+	<name>Spring MVC Mini Project</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
