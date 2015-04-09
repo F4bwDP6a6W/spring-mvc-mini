@@ -27,6 +27,3 @@ spring-oss-mini\src\main\resources\logback.xml
 spring-oss-mini\resources\application.properties
 
 
-/user/local/tomcat7/apache-tomcat-7.0.57/webapps
-/opt/web/spring-mvc-mini
-
