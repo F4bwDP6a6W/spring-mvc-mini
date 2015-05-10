@@ -53,7 +53,8 @@ Note:
  如果你要在Linux环境运行，以下的文件需要修改。
 
 If you want to deploy this project to Linux server, you might need to edit conf files:
-	$ spring-oss-mini\src\main\webapp\WEB-INF\spring\appServlet\servlet-context.xml:<context:property-placeholder 
+
+    $ spring-oss-mini\src\main\webapp\WEB-INF\spring\appServlet\servlet-context.xml:<context:property-placeholder 
 	$ location="file:/opt/web/spring-mvc-mini/resources/application.properties"/>
 	$ spring-oss-mini\src\main\resources\logback.xml
 	$ spring-oss-mini\resources\application.properties
