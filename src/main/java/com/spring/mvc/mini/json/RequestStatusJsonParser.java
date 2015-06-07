@@ -16,9 +16,9 @@ import com.spring.mvc.mini.pojo.ObjectClass;
 import com.spring.mvc.mini.properties.Properties;
 
 @Component
-public class RequestStatusJsonMapping {
+public class RequestStatusJsonParser {
 
-    static Logger LOG = LoggerFactory.getLogger(RequestStatusJsonMapping.class);
+    static Logger LOG = LoggerFactory.getLogger(RequestStatusJsonParser.class);
 
     @Autowired
     private Properties properties;
@@ -27,7 +27,7 @@ public class RequestStatusJsonMapping {
 
         ArrayList<RequestStatus> list = this.readStatus();
 
-        ArrayList<ObjectClass> objectClasses = list.get(list.size() - 1).getObjectClassListType().getObjectclasslist();
+        ArrayList<ObjectClass> objectClasses = list.get(list.size() - 1).getObjectClassListType().getObjectClasses();
 
         return objectClasses.get(objectClasses.size() - 1).getIntclass();
     }

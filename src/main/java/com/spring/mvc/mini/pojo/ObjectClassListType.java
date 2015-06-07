@@ -3,22 +3,23 @@ package com.spring.mvc.mini.pojo;
 import java.util.ArrayList;
 
 public class ObjectClassListType {
-	ArrayList<ObjectClass> objectclasslist;
 
-	public ArrayList<ObjectClass> getObjectclasslist() {
-		return objectclasslist;
-	}
+    ArrayList<ObjectClass> objectClasses;
 
-	public void setObjectclasslist(ArrayList<ObjectClass> objectclasslist) {
-		this.objectclasslist = objectclasslist;
-	}
+    public ArrayList<ObjectClass> getObjectClasses() {
+        return objectClasses;
+    }
 
-	@Override
-	public String toString() {
-		StringBuffer sb = new StringBuffer();
-		for (ObjectClass item:objectclasslist){
-			sb.append(item);
-		}
-		return "ObjectClassListType [objectclasslist=" + sb.toString() + "]";
-	}
+    public void setObjectClasses(ArrayList<ObjectClass> objectClasses) {
+        this.objectClasses = objectClasses;
+    }
+
+    @Override
+    public String toString() {
+        StringBuffer sb = new StringBuffer();
+        for (ObjectClass item : objectClasses) {
+            sb.append(item);
+        }
+        return "ObjectClassListType [objectClasses=" + sb + "]";
+    }
 }

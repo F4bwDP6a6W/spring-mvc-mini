@@ -78,13 +78,13 @@ public class  ObjectClassXMLPaser {
 			if (node instanceof Element) {
 				
 				objcls.setId(((Element) node).getAttribute("id").toString());
-				objcls.setAbbrev(((Element) node).getAttribute("abbrev")
+				objcls.setAbbreviation(((Element) node).getAttribute("abbrev")
 						.toString());
 				objcls.setIntclass(Integer.parseInt(((Element) node).getAttribute("intclass")));
 				objcls.setName(((Element) node).getAttribute("name").toString());
 				objcls.setParents(((Element) node).getAttribute("parents")
 						.toString());
-				objcls.setAdaID(((Element) node).getAttribute("adaID")
+				objcls.setPackageName(((Element) node).getAttribute("adaID")
 						.toString());
 				elementcount++;
 				objclsList.add(objcls);
@@ -123,8 +123,8 @@ public class  ObjectClassXMLPaser {
 			Element objclselement = document.createElement("objclass");
 			objclselement.setAttribute("id", objcls.getId());
 			objclselement.setAttribute("intclass", String.valueOf(objcls.getIntclass()));
-			objclselement.setAttribute("abbrev", objcls.getAbbrev());
-			objclselement.setAttribute("adaID", objcls.getAdaID());
+			objclselement.setAttribute("abbrev", objcls.getAbbreviation());
+			objclselement.setAttribute("adaID", objcls.getPackageName());
 			objclselement.setAttribute("name", objcls.getName());
 			objclselement.setAttribute("parents", objcls.getParents());
 				

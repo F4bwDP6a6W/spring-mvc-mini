@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.spring.mvc.mini.json.RequestStatusJsonMapping;
+import com.spring.mvc.mini.json.RequestStatusJsonParser;
 import com.spring.mvc.mini.mail.MailSender;
 import com.spring.mvc.mini.pojo.RequestStatus;
 import com.spring.mvc.mini.properties.Properties;
@@ -40,7 +40,7 @@ public class ObjectClassFormController {
 	static Logger LOGGER = LoggerFactory.getLogger(ObjectClassFormController.class);
 	
 	@Autowired
-	RequestStatusJsonMapping rsjm;
+	RequestStatusJsonParser rsjm;
 	
 	@Autowired
 	ObjectClassDataValidator ocdv;
@@ -72,7 +72,7 @@ public class ObjectClassFormController {
 		
 		ArrayList<ObjectClass> objclsList = new ArrayList<ObjectClass>();
 		objclsList.add(createObjectClassInstance(0,userinfo,mocrid));
-		ojbclslisttype.setObjectclasslist(objclsList);
+		ojbclslisttype.setObjectClasses(objclsList);
 		
 		model.addAttribute("ojbclslisttype", ojbclslisttype);
 	}
@@ -83,7 +83,7 @@ public class ObjectClassFormController {
 	@RequestMapping(params={"objclscount"},method=RequestMethod.POST)
 	public void objectClassFormWithParam(@Valid ObjectClassListType ojbclslisttype, @ModelAttribute("userinfo") UserInfo userinfo, @ModelAttribute("mocrid") String mocrid, @RequestParam String objclscount, Model model) {
 		
-		ArrayList<ObjectClass> objclsList = ojbclslisttype.getObjectclasslist();
+		ArrayList<ObjectClass> objclsList = ojbclslisttype.getObjectClasses();
 		
 //		for(int i=1;i<Integer.parseInt(objclscount)+1;i++){
 			
@@ -91,7 +91,7 @@ public class ObjectClassFormController {
 
 //		}
 		
-		ojbclslisttype.setObjectclasslist(objclsList);
+		ojbclslisttype.setObjectClasses(objclsList);
 		
 		model.addAttribute("ojbclslisttype", ojbclslisttype);
 	}
@@ -109,7 +109,7 @@ public class ObjectClassFormController {
 			return null;
 		}
 		
-		ArrayList<ObjectClass> objclsList = ojbclslisttype.getObjectclasslist();
+		ArrayList<ObjectClass> objclsList = ojbclslisttype.getObjectClasses();
 		
 		try {
 			ocdv.checkData(objclsList);
@@ -151,7 +151,7 @@ public class ObjectClassFormController {
 		subjectsb.append(mocrid);
 		subjectsb.append(" for ");
 		for(ObjectClass objcls:objclsList){
-			subjectsb.append(objcls.getAbbrev());
+			subjectsb.append(objcls.getAbbreviation());
 		}
 		
 		StringBuffer textsb = new StringBuffer();

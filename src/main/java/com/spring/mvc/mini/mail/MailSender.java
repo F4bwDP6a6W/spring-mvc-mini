@@ -21,36 +21,37 @@ import com.spring.mvc.mini.properties.Properties;
 @Component
 public class MailSender {
 	
-	static Logger LOGGER = LoggerFactory.getLogger(MailSender.class);
+	static Logger LOG = LoggerFactory.getLogger(MailSender.class);
 
     @Autowired
     private Properties properties;
 	
-    public void sendMail(final String username,final String password, String fromAddress, Address[] toAddress, String subject, String text) throws AddressException, MessagingException {
-    	
-        java.util.Properties props = new java.util.Properties();
-        props.put("mail.smtp.starttls.enable", properties.getStarttlsEnable());
-        props.put("mail.smtp.auth", properties.getAuth());
-        props.put("mail.smtp.host", properties.getHost());
-        props.put("mail.smtp.port", properties.getPort());
-        
+    public void sendMail(final String username,final String password, String fromAddress, Address[] toAddress, String subject, String text) throws Exception {
+
             Authenticator au =  new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
                     return new PasswordAuthentication(username, password);
                 }
               };
               
-            Session session = Session.getInstance(props, au);
-            
-            Message message = new MimeMessage(session);
+            Message message = new MimeMessage(Session.getInstance(getProperties(), au));
             message.setFrom(new InternetAddress(fromAddress));
             message.setSubject(subject);
             message.setText(text);
             message.setRecipients(Message.RecipientType.TO, toAddress);
             Transport.send(message);
             
-            LOGGER.info("Send Mail Done: "+fromAddress+" to" + toAddress);
+            LOG.info("Send Mail Done: " + fromAddress + " to" + toAddress);
 
+    }
+
+    private java.util.Properties getProperties() {
+        java.util.Properties props = new java.util.Properties();
+        props.put("mail.smtp.starttls.enable", properties.getStarttlsEnable());
+        props.put("mail.smtp.auth", properties.getAuth());
+        props.put("mail.smtp.host", properties.getHost());
+        props.put("mail.smtp.port", properties.getPort());
+        return props;
     }
 
 }

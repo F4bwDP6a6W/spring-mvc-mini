@@ -22,8 +22,8 @@ public class ObjectClassDataValidator {
 			
 			boolean parentsMark = false;
 			
-			if(!objclsItemFormIn.getAbbrev().equals(objclsItemFormIn.getAbbrev().toUpperCase())){
-				throw new ObjectClassDataValidationException("FAILED:ObjectClass abbrev:\""+objclsItemFormIn.getAbbrev()+"\" should be all uppercase.");
+			if(!objclsItemFormIn.getAbbreviation().equals(objclsItemFormIn.getAbbreviation().toUpperCase())){
+				throw new ObjectClassDataValidationException("FAILED:ObjectClass abbrev:\""+objclsItemFormIn.getAbbreviation()+"\" should be all uppercase.");
 			}
 			
 			for (ObjectClass objclsItemXmlIn:objclsListXmlIn){
@@ -31,8 +31,8 @@ public class ObjectClassDataValidator {
 				if(objclsItemXmlIn.getId().equals(objclsItemFormIn.getId())){
 					throw new ObjectClassDataValidationException("FAILED:ObjectClass id:\""+objclsItemFormIn.getId()+"\" is already reserved.");
 				}
-				if(objclsItemXmlIn.getAbbrev().equals(objclsItemFormIn.getAbbrev())){
-					throw new ObjectClassDataValidationException("FAILED:ObjectClass abbrev:\""+objclsItemFormIn.getAbbrev()+"\" is already reserved.");
+				if(objclsItemXmlIn.getAbbreviation().equals(objclsItemFormIn.getAbbreviation())){
+					throw new ObjectClassDataValidationException("FAILED:ObjectClass abbrev:\""+objclsItemFormIn.getAbbreviation()+"\" is already reserved.");
 				}
 				if(objclsItemXmlIn.getId().equals(objclsItemFormIn.getParents())){
 					parentsMark = true;

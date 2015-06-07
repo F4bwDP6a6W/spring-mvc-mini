@@ -5,8 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.mail.Address;
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 import org.joda.time.DateTime;
@@ -15,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.spring.mvc.mini.json.RequestStatusJsonMapping;
+import com.spring.mvc.mini.json.RequestStatusJsonParser;
 import com.spring.mvc.mini.mail.MailSender;
 import com.spring.mvc.mini.pojo.RequestStatus;
 import com.spring.mvc.mini.pojo.RequestStatusListType;
@@ -26,75 +24,82 @@ import com.spring.mvc.mini.svn.SVNHandler;
 import com.spring.mvc.mini.xml.ObjectClassXMLPaser;
 
 public class ScheduleFileUpdator {
-	
-	static Logger LOGGER = LoggerFactory.getLogger(ScheduleFileUpdator.class);
-	
-	@Autowired
-	RequestStatusJsonMapping rsjm;
-	
-	@Autowired
-	SVNHandler sh;
-	
-	@Autowired
-	ObjectClassXMLPaser ocxp;
-	
-	@Autowired
-	MailSender ms;
-	
-    public void commitObjectClassXml()
-    {	
-		Calendar cal = Calendar.getInstance();
-    	Date currenttime = cal.getTime();
-    	
-    	LOGGER.info("Scheduler start at:"+ currenttime);
 
-    	ArrayList<RequestStatus> mrsList = rsjm.readStatus();
-    	
-    	int mrsIndex = 0;
-    	for(RequestStatus mrs:mrsList){
-    		
-    		int days = Days.daysBetween(new DateTime(mrs.getSubmitDate()), new DateTime(currenttime)).getDays();
+    static Logger LOG = LoggerFactory.getLogger(ScheduleFileUpdator.class);
 
-    		if(StatusType.ongoing.equals(mrs.getStatus())){
-        		if(days >= 5){
-        			
-        			mrsIndex = mrsList.indexOf(mrs);
-        			mrsList.get(mrsIndex).setCommitDate(currenttime);
-        			mrsList.get(mrsIndex).setStatus(StatusType.commited);
-        			
-        			StringBuffer subjectsb = new StringBuffer();
-        			subjectsb.append("Final approval of MO CR ");
-        			subjectsb.append(mrs.getmocrid());
-        			subjectsb.append(" for ");
-        			
-        			for(ObjectClass objcls:mrs.getObjectClassListType().getObjectclasslist()){
-        				ocxp.AddObjectClass(objcls);
-        				subjectsb.append(objcls.getAbbrev());
-        			}
-        			
-        			LOGGER.info("MO CR "+mrs.getmocrid()+" was checked at:"+ new Date());
-        			
-        			try {
-						this.commitAndSendMail(mrs.getUserinfo(), subjectsb.toString(), "Congratulation!");
-					} catch (MessagingException e) {
-						LOGGER.error(e.toString());
-					}
-        		}
-    		}
+    @Autowired
+    RequestStatusJsonParser jsonParser;
 
-    	}
-    	RequestStatusListType mrslt = new RequestStatusListType();
-    	mrslt.setRequestStatuses(mrsList);
-    	rsjm.writeStatus(mrslt);
-    	
-    	sh.svnCheckin();
+    @Autowired
+    SVNHandler svnHandler;
+
+    @Autowired
+    ObjectClassXMLPaser objectClassXMLPaser;
+
+    @Autowired
+    MailSender mailSender;
+
+    public void commitObjectClassXml() {
+        Calendar calendar = Calendar.getInstance();
+        Date currentTime = calendar.getTime();
+
+        LOG.info("Scheduler start at:" + currentTime);
+
+        ArrayList<RequestStatus> requestStatuses = jsonParser.readStatus();
+
+        int requestStatusIndex = 0;
+        for (RequestStatus status : requestStatuses) {
+
+            int daysBetweenSubmitAndCurrent = Days.daysBetween(new DateTime(status.getSubmitDate()), new DateTime(currentTime)).getDays();
+
+            if (StatusType.ongoing.equals(status.getStatus())) {
+                if (daysBetweenSubmitAndCurrent >= 5) {
+
+                    setCommitDateAndStatus(currentTime, requestStatuses, status);
+
+                    LOG.info("MO CR " + status.getmocrid() + " was checked at:" + new Date());
+
+                    try {
+                        this.commitAndSendMail(status.getUserinfo(), appendCommitMessage(status), "Congratulation!");
+                    } catch (Exception e) {
+                        LOG.error(e.toString());
+                    }
+                }
+            }
+
+        }
+        RequestStatusListType type = new RequestStatusListType();
+        type.setRequestStatuses(requestStatuses);
+        jsonParser.writeStatus(type);
+
+        svnHandler.svnCheckin();
     }
-    
-	public void commitAndSendMail(UserInfo userinfo ,String subject, String text) throws AddressException, MessagingException{
-		
 
-		Address[] toAddress = {new InternetAddress(userinfo.getEmail())};
-		
-		ms.sendMail(userinfo.getUsername(),userinfo.getPassword(),userinfo.getEmail(),toAddress, subject, text);
-	}
+    private String appendCommitMessage(RequestStatus status) {
+
+        StringBuffer s = new StringBuffer();
+        s.append("Final approval of MO CR ");
+        s.append(status.getmocrid());
+        s.append(" for ");
+
+        for (ObjectClass objcls : status.getObjectClassListType().getObjectClasses()) {
+            objectClassXMLPaser.AddObjectClass(objcls);
+            s.append(objcls.getAbbreviation());
+        }
+        return s.toString();
+    }
+
+    private void setCommitDateAndStatus(Date currentTime, ArrayList<RequestStatus> requestStatuses, RequestStatus status) {
+        int requestStatusIndex;
+        requestStatusIndex = requestStatuses.indexOf(status);
+        requestStatuses.get(requestStatusIndex).setCommitDate(currentTime);
+        requestStatuses.get(requestStatusIndex).setStatus(StatusType.commited);
+    }
+
+    public void commitAndSendMail(UserInfo userInfo, String subject, String text) throws Exception {
+
+        Address[] toAddress = {new InternetAddress(userInfo.getEmail())};
+
+        mailSender.sendMail(userInfo.getUsername(), userInfo.getPassword(), userInfo.getEmail(), toAddress, subject, text);
+    }
 }

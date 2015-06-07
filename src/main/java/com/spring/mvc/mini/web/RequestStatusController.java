@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.spring.mvc.mini.json.RequestStatusJsonMapping;
+import com.spring.mvc.mini.json.RequestStatusJsonParser;
 import com.spring.mvc.mini.mail.MailSender;
 import com.spring.mvc.mini.pojo.RequestStatusListType;
 import com.spring.mvc.mini.pojo.UserInfo;
@@ -34,7 +34,7 @@ public class RequestStatusController {
 	static Logger LOGGER = LoggerFactory.getLogger(RequestStatusController.class);
 	
 	@Autowired
-	RequestStatusJsonMapping rsjm;
+	RequestStatusJsonParser rsjm;
 	
 	@Autowired
 	MailSender ms;
