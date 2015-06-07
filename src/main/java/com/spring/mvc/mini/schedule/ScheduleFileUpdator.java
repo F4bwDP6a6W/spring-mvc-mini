@@ -17,8 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.spring.mvc.mini.json.RequestStatusJsonMapping;
 import com.spring.mvc.mini.mail.MailSender;
-import com.spring.mvc.mini.pojo.MOCRequestStatus;
-import com.spring.mvc.mini.pojo.MOCRequestStatusListType;
+import com.spring.mvc.mini.pojo.RequestStatus;
+import com.spring.mvc.mini.pojo.RequestStatusListType;
 import com.spring.mvc.mini.pojo.ObjectClass;
 import com.spring.mvc.mini.pojo.StatusType;
 import com.spring.mvc.mini.pojo.UserInfo;
@@ -48,10 +48,10 @@ public class ScheduleFileUpdator {
     	
     	LOGGER.info("Scheduler start at:"+ currenttime);
 
-    	ArrayList<MOCRequestStatus> mrsList = rsjm.readStatus();
+    	ArrayList<RequestStatus> mrsList = rsjm.readStatus();
     	
     	int mrsIndex = 0;
-    	for(MOCRequestStatus mrs:mrsList){
+    	for(RequestStatus mrs:mrsList){
     		
     		int days = Days.daysBetween(new DateTime(mrs.getSubmitDate()), new DateTime(currenttime)).getDays();
 
@@ -67,7 +67,7 @@ public class ScheduleFileUpdator {
         			subjectsb.append(mrs.getmocrid());
         			subjectsb.append(" for ");
         			
-        			for(ObjectClass objcls:mrs.getOjbclslisttype().getObjectclasslist()){
+        			for(ObjectClass objcls:mrs.getObjectClassListType().getObjectclasslist()){
         				ocxp.AddObjectClass(objcls);
         				subjectsb.append(objcls.getAbbrev());
         			}
@@ -83,8 +83,8 @@ public class ScheduleFileUpdator {
     		}
 
     	}
-    	MOCRequestStatusListType mrslt = new MOCRequestStatusListType();
-    	mrslt.setMrsl(mrsList);
+    	RequestStatusListType mrslt = new RequestStatusListType();
+    	mrslt.setRequestStatuses(mrsList);
     	rsjm.writeStatus(mrslt);
     	
     	sh.svnCheckin();

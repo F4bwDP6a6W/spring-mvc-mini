@@ -1,7 +1,5 @@
 package com.spring.mvc.mini.mail;
 
-import java.util.Properties;
-
 import javax.mail.Address;
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -18,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.spring.mvc.mini.properties.PropertiesBean;
+import com.spring.mvc.mini.properties.Properties;
 
 @Component
 public class MailSender {
@@ -26,15 +24,15 @@ public class MailSender {
 	static Logger LOGGER = LoggerFactory.getLogger(MailSender.class);
 
     @Autowired
-    private PropertiesBean propertiesBean;
+    private Properties properties;
 	
     public void sendMail(final String username,final String password, String fromAddress, Address[] toAddress, String subject, String text) throws AddressException, MessagingException {
     	
-        Properties props = new Properties();
-        props.put("mail.smtp.starttls.enable",propertiesBean.getStarttlsEnable());
-        props.put("mail.smtp.auth",propertiesBean.getAuth());
-        props.put("mail.smtp.host",propertiesBean.getHost());
-        props.put("mail.smtp.port",propertiesBean.getPort());
+        java.util.Properties props = new java.util.Properties();
+        props.put("mail.smtp.starttls.enable", properties.getStarttlsEnable());
+        props.put("mail.smtp.auth", properties.getAuth());
+        props.put("mail.smtp.host", properties.getHost());
+        props.put("mail.smtp.port", properties.getPort());
         
             Authenticator au =  new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {

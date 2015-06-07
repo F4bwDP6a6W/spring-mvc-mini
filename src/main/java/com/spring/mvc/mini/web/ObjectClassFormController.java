@@ -11,6 +11,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.validation.Valid;
 
+import com.spring.mvc.mini.pojo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.mvc.mini.json.RequestStatusJsonMapping;
 import com.spring.mvc.mini.mail.MailSender;
-import com.spring.mvc.mini.pojo.MOCRequestStatus;
-import com.spring.mvc.mini.pojo.MOCRequestStatusListType;
-import com.spring.mvc.mini.pojo.ObjectClass;
-import com.spring.mvc.mini.pojo.ObjectClassListType;
-import com.spring.mvc.mini.pojo.StatusType;
-import com.spring.mvc.mini.pojo.UserInfo;
-import com.spring.mvc.mini.properties.PropertiesBean;
+import com.spring.mvc.mini.pojo.RequestStatus;
+import com.spring.mvc.mini.properties.Properties;
 import com.spring.mvc.mini.validation.ObjectClassDataValidator;
 
 @Controller
@@ -50,7 +46,7 @@ public class ObjectClassFormController {
 	ObjectClassDataValidator ocdv;
 
 	@Autowired
-	PropertiesBean propertiesBean;
+	Properties properties;
 	
 	@Autowired
 	MailSender ms;
@@ -131,21 +127,21 @@ public class ObjectClassFormController {
 		
 		LOGGER.debug(debugmessage.toString());
 		
-		ArrayList<MOCRequestStatus> mrsl = rsjm.readStatus();
+		ArrayList<RequestStatus> mrsl = rsjm.readStatus();
 		
-		MOCRequestStatus mrs = new MOCRequestStatus();
+		RequestStatus mrs = new RequestStatus();
 		Calendar cal = Calendar.getInstance();
 
 		mrs.setSubmitDate(cal.getTime());
 		mrs.setmocrid(Integer.parseInt(mocrid));
-		mrs.setOjbclslisttype(ojbclslisttype);
+		mrs.setObjectClassListType(ojbclslisttype);
 		mrs.setStatus(StatusType.ongoing);
 		mrs.setUserinfo(userinfo);
 		
 		mrsl.add(mrs);
 		
-		MOCRequestStatusListType mrslt = new MOCRequestStatusListType();
-		mrslt.setMrsl(mrsl);
+		RequestStatusListType mrslt = new RequestStatusListType();
+		mrslt.setRequestStatuses(mrsl);
 		rsjm.writeStatus(mrslt);
 		
 		String message = "MO CR:"+mocrid+" committed. System will send mail to reviewers.";
@@ -161,7 +157,7 @@ public class ObjectClassFormController {
 		StringBuffer textsb = new StringBuffer();
 		textsb.append("Hi,\r\n\r\nThese MO CR's shall be approved if no other comments.\r\nIf you have any comment, please comment on this page:\r\n");
 		textsb.append("http://");
-		textsb.append(propertiesBean.getWebhostname());
+		textsb.append(properties.getWebHostname());
 		textsb.append(":8080/spring-mvc-mini/requeststatus?mocrid=");
 		textsb.append(mocrid);
 		textsb.append("\r\nor mailto:");
@@ -169,7 +165,7 @@ public class ObjectClassFormController {
 		textsb.append("\r\n");
 		textsb.append("The request will be committed in 5 days.\r\n\r\nThanks.\r\n");
 		textsb.append("http://");
-		textsb.append(propertiesBean.getWebhostname());
+		textsb.append(properties.getWebHostname());
 		textsb.append(":8080/spring-mvc-mini/");
 		
 		try {
@@ -207,7 +203,7 @@ public class ObjectClassFormController {
 	
 	public void commitAndSendMail(UserInfo userinfo ,String subject, String text) throws AddressException, MessagingException{
 		
-		Address[] toAddress = {new InternetAddress(propertiesBean.getMailto()), new InternetAddress(userinfo.getEmail())};
+		Address[] toAddress = {new InternetAddress(properties.getMailto()), new InternetAddress(userinfo.getEmail())};
 		
 		ms.sendMail(userinfo.getUsername(), userinfo.getPassword(), userinfo.getEmail(),toAddress, subject, text);
 	}

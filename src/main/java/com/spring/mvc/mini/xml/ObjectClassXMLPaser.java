@@ -24,7 +24,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.spring.mvc.mini.pojo.ObjectClass;
-import com.spring.mvc.mini.properties.PropertiesBean;
+import com.spring.mvc.mini.properties.Properties;
 import com.spring.mvc.mini.svn.SVNHandler;
 
 @Component
@@ -33,7 +33,7 @@ public class  ObjectClassXMLPaser {
 	static Logger LOGGER = LoggerFactory.getLogger(ObjectClassXMLPaser.class);
 	
     @Autowired
-    private PropertiesBean propertiesBean;
+    private Properties properties;
     
     @Autowired
     private SVNHandler sh;
@@ -52,7 +52,7 @@ public class  ObjectClassXMLPaser {
 		// Load and Parse the XML document
 		// document contains the complete XML as a Tree.
 		
-		File objclsFile = new File(propertiesBean.getXmlpath());
+		File objclsFile = new File(properties.getXmlPath());
 	
 		Document document = builder.parse(objclsFile);
 		
@@ -108,7 +108,7 @@ public class  ObjectClassXMLPaser {
 			DocumentBuilder builder = factory.newDocumentBuilder();;
 
 
-		File objclsFile = new File(propertiesBean.getXmlpath());
+		File objclsFile = new File(properties.getXmlPath());
 		
 		// Load and Parse the XML document
 		// document contains the complete XML as a Tree.
@@ -135,7 +135,7 @@ public class  ObjectClassXMLPaser {
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(document);
 			
-			StreamResult result = new StreamResult(new File(propertiesBean.getXmlpath()));
+			StreamResult result = new StreamResult(new File(properties.getXmlPath()));
 	 
 			// Output to console for testing
 			// StreamResult result = new StreamResult(System.out);
@@ -152,7 +152,7 @@ public class  ObjectClassXMLPaser {
 		LOGGER.info("Start to checkout");
 		sh.svnCheckout();
 			
-		Path path = Paths.get(propertiesBean.getXmlpath());
+		Path path = Paths.get(properties.getXmlPath());
 		
 		return Files.readAllBytes(path);
 		

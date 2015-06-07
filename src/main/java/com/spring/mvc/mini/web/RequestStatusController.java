@@ -7,6 +7,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
+import com.spring.mvc.mini.pojo.RequestStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.mvc.mini.json.RequestStatusJsonMapping;
 import com.spring.mvc.mini.mail.MailSender;
-import com.spring.mvc.mini.pojo.MOCRequestStatus;
-import com.spring.mvc.mini.pojo.MOCRequestStatusListType;
+import com.spring.mvc.mini.pojo.RequestStatusListType;
 import com.spring.mvc.mini.pojo.UserInfo;
 
 @Controller
@@ -51,15 +51,15 @@ public class RequestStatusController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public void objectClassForm(Model model) {
-		model.addAttribute("miniequeststatus", new MOCRequestStatus());
+		model.addAttribute("miniequeststatus", new RequestStatus());
 	}
 	
 	@RequestMapping(params={"mocrid"},method=RequestMethod.GET)
 	public void objectClassFormWithParam(@RequestParam String mocrid, Model model) {
 		
-		ArrayList<MOCRequestStatus> mrsList = rsjm.readStatus();
+		ArrayList<RequestStatus> mrsList = rsjm.readStatus();
 		
-		for(MOCRequestStatus mrs:mrsList){
+		for(RequestStatus mrs:mrsList){
 			
 			if(mrs.getmocrid() == Integer.parseInt(mocrid)){
 				LOGGER.debug("mrs.getmocrid() is:"+mrs.getmocrid());
@@ -70,15 +70,15 @@ public class RequestStatusController {
 	}
 
 	@RequestMapping(method=RequestMethod.POST)
-	public String processSubmit(@ModelAttribute("miniequeststatus") MOCRequestStatus miniequeststatus, 
+	public String processSubmit(@ModelAttribute("miniequeststatus") RequestStatus miniequeststatus,
 								@ModelAttribute("ajaxRequest") boolean ajaxRequest, 
 								Model model, RedirectAttributes redirectAttrs) {
 		
-		if(miniequeststatus.getOjbclslisttype() == null){
-			ArrayList<MOCRequestStatus> mrsList = rsjm.readStatus();
+		if(miniequeststatus.getObjectClassListType() == null){
+			ArrayList<RequestStatus> mrsList = rsjm.readStatus();
 			
 			boolean boo = false;
-			for(MOCRequestStatus mrs:mrsList){
+			for(RequestStatus mrs:mrsList){
 				
 				if(mrs.getmocrid() == miniequeststatus.getmocrid()){
 					
@@ -91,15 +91,15 @@ public class RequestStatusController {
 				model.addAttribute("message", "SUCCESS:MO CR ID:"+miniequeststatus.getmocrid()+" is presenting.");
 				return null;
 			} else {
-				model.addAttribute("miniequeststatus", new MOCRequestStatus());
+				model.addAttribute("miniequeststatus", new RequestStatus());
 				model.addAttribute("message", "FAILED:MO CR ID:"+miniequeststatus.getmocrid()+" is not existing.");
 			}
 		}
 		
-		ArrayList<MOCRequestStatus> mrsl =  rsjm.readStatus();
+		ArrayList<RequestStatus> mrsl =  rsjm.readStatus();
 		
 		int index = 0;
-		for (MOCRequestStatus item:mrsl){
+		for (RequestStatus item:mrsl){
 			if(item.getmocrid() == miniequeststatus.getmocrid()){
 				index = mrsl.indexOf(item);
 				break;
@@ -107,11 +107,11 @@ public class RequestStatusController {
 		}
 		
 		mrsl.get(index).setComments(miniequeststatus.getComments());
-		mrsl.get(index).setOjbclslisttype(miniequeststatus.getOjbclslisttype());
+		mrsl.get(index).setObjectClassListType(miniequeststatus.getObjectClassListType());
 		
-		MOCRequestStatusListType mrslt = new MOCRequestStatusListType();
+		RequestStatusListType mrslt = new RequestStatusListType();
 		
-		mrslt.setMrsl(mrsl);
+		mrslt.setRequestStatuses(mrsl);
 		rsjm.writeStatus(mrslt);
 		
 		LOGGER.debug(mrslt.toString());
@@ -127,9 +127,9 @@ public class RequestStatusController {
 		textsb.append(" \r\n");
 		
 		try {
-			if(!mrsl.get(index).getOjbclslisttype().equals(miniequeststatus.getOjbclslisttype())){
+			if(!mrsl.get(index).getObjectClassListType().equals(miniequeststatus.getObjectClassListType())){
 				textsb.append("Object Classes updated: \r\n");
-				textsb.append(miniequeststatus.getOjbclslisttype().toString());
+				textsb.append(miniequeststatus.getObjectClassListType().toString());
 			}
 			
 			textsb.append("http://localhost:8080/spring-mvc-mini/requeststatus?mocrid=");

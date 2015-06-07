@@ -21,7 +21,7 @@ import org.tmatesoft.svn.core.wc.SVNRevision;
 import org.tmatesoft.svn.core.wc.SVNUpdateClient;
 import org.tmatesoft.svn.core.wc.SVNWCUtil;
 
-import com.spring.mvc.mini.properties.PropertiesBean;
+import com.spring.mvc.mini.properties.Properties;
 
 @Component
 public class SVNHandler {
@@ -29,7 +29,7 @@ public class SVNHandler {
 	static Logger LOGGER = LoggerFactory.getLogger(SVNHandler.class);
 
     @Autowired
-    private PropertiesBean propertiesBean;
+    private Properties properties;
 	
 	public void svnCheckin(){
 		
@@ -39,11 +39,11 @@ public class SVNHandler {
 		
 		try{
 			//initiate the reporitory from the url
-			repository = SVNRepositoryFactory.create(SVNURL.parseURIDecoded(propertiesBean.getRepurl()));
+			repository = SVNRepositoryFactory.create(SVNURL.parseURIDecoded(properties.getRepURL()));
 			
 			//create authentication data
 			ISVNAuthenticationManager authManager = 
-					SVNWCUtil.createDefaultAuthenticationManager(propertiesBean.getUsername(), propertiesBean.getPassword());
+					SVNWCUtil.createDefaultAuthenticationManager(properties.getUsername(), properties.getPassword());
 			repository.setAuthenticationManager(authManager);
 			
 			//output some data to verify connection
@@ -62,8 +62,8 @@ public class SVNHandler {
 			SVNCommitClient commitClient = ourClientManager.getCommitClient();
 		    SVNDiffClient diffClient = ourClientManager.getDiffClient();
 		    
-		    File xmlfile = new File(propertiesBean.getXmlpath());
-		    File jsonfile = new File(propertiesBean.getJsonpath());
+		    File xmlfile = new File(properties.getXmlPath());
+		    File jsonfile = new File(properties.getJsonPath());
 		    File[] xmlfilearray = {xmlfile};
 		    File[] jsonfilearray = {jsonfile};
 		    
@@ -94,7 +94,7 @@ public class SVNHandler {
 	
 	public void svnCheckout() {
 		
-		File svnTempDir = new File(propertiesBean.getReppath());
+		File svnTempDir = new File(properties.getRepPath());
 		if (svnTempDir.exists()){
 			return;
 		}
@@ -103,11 +103,11 @@ public class SVNHandler {
 		
 		try{
 			//initiate the reporitory from the url
-			repository = SVNRepositoryFactory.create(SVNURL.parseURIDecoded(propertiesBean.getRepurl()));
+			repository = SVNRepositoryFactory.create(SVNURL.parseURIDecoded(properties.getRepURL()));
 			
 			//create authentication data
 			ISVNAuthenticationManager authManager = 
-					SVNWCUtil.createDefaultAuthenticationManager(propertiesBean.getUsername(), propertiesBean.getPassword());
+					SVNWCUtil.createDefaultAuthenticationManager(properties.getUsername(), properties.getPassword());
 			repository.setAuthenticationManager(authManager);
 			
 			//need to identify latest revision

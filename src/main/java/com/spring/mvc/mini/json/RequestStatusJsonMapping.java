@@ -3,8 +3,6 @@ package com.spring.mvc.mini.json;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,74 +10,62 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spring.mvc.mini.pojo.MOCRequestStatus;
-import com.spring.mvc.mini.pojo.MOCRequestStatusListType;
+import com.spring.mvc.mini.pojo.RequestStatus;
+import com.spring.mvc.mini.pojo.RequestStatusListType;
 import com.spring.mvc.mini.pojo.ObjectClass;
-import com.spring.mvc.mini.pojo.ObjectClassListType;
-import com.spring.mvc.mini.pojo.StatusType;
-import com.spring.mvc.mini.pojo.UserInfo;
-import com.spring.mvc.mini.properties.PropertiesBean;
+import com.spring.mvc.mini.properties.Properties;
 
 @Component
 public class RequestStatusJsonMapping {
-	
-	static Logger LOGGER = LoggerFactory.getLogger(RequestStatusJsonMapping.class);
-	
+
+    static Logger LOG = LoggerFactory.getLogger(RequestStatusJsonMapping.class);
+
     @Autowired
-    private PropertiesBean propertiesBean;
-	
-	public int getMaxIntClass(){
-		
-		ArrayList<MOCRequestStatus> mrsList = this.readStatus();
-		
-		ArrayList<ObjectClass> objclsList = mrsList.get(mrsList.size()-1).getOjbclslisttype().getObjectclasslist();
-		int intclass = objclsList.get(objclsList.size()-1).getIntclass();
-		
-		LOGGER.debug("MaxIntClass:"+intclass);
-		
-		return intclass;
-	}
-	
-	public int getLatestmocrid(){
+    private Properties properties;
 
-		ArrayList<MOCRequestStatus> mrsList = this.readStatus();
-	
-		int mocrid = mrsList.get(mrsList.size()-1).getmocrid(); 
-		
-		LOGGER.info("getLatestmocrid:"+mocrid);
-		
-		return mocrid;
-	}
-	
+    public int getMaxIntClass() {
 
-	public void writeStatus(MOCRequestStatusListType mrslt){
-		
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			mapper.writeValue(new File(propertiesBean.getJsonpath()), mrslt);
-		} catch (IOException e) {
-			LOGGER.error(e.toString());
-		}
-		
-	}
-	
-	public ArrayList<MOCRequestStatus> readStatus(){
-		ObjectMapper mapper = new ObjectMapper();
-		MOCRequestStatusListType mrslt = null;
-		
-		try {
-			mrslt = mapper.readValue(new File(propertiesBean.getJsonpath()), MOCRequestStatusListType.class);
-			
-			LOGGER.debug(mrslt.toString());
-				
-		} catch (IOException e) {
-			
-			LOGGER.error(e.toString());
-		}
-		
-		ArrayList<MOCRequestStatus> mrsList = mrslt.getMrsl();
-		return mrsList;
-	}
+        ArrayList<RequestStatus> list = this.readStatus();
+
+        ArrayList<ObjectClass> objectClasses = list.get(list.size() - 1).getObjectClassListType().getObjectclasslist();
+
+        return objectClasses.get(objectClasses.size() - 1).getIntclass();
+    }
+
+    public int getLatestmocrid() {
+
+        ArrayList<RequestStatus> mrsList = this.readStatus();
+
+        return mrsList.get(mrsList.size() - 1).getmocrid();
+    }
+
+
+    public void writeStatus(RequestStatusListType mrslt) {
+
+        try {
+            new ObjectMapper().writeValue(new File(properties.getJsonPath()), mrslt);
+        } catch (IOException e) {
+            LOG.error(e.toString());
+        }
+
+    }
+
+    public ArrayList<RequestStatus> readStatus() {
+
+        RequestStatusListType type = null;
+
+        try {
+            type = new ObjectMapper().readValue(new File(properties.getJsonPath()), RequestStatusListType.class);
+
+            LOG.debug(type.toString());
+
+        } catch (IOException e) {
+
+            LOG.error(e.toString());
+        }
+
+        return type.getRequestStatuses();
+    }
 
 
 }
