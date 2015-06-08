@@ -23,10 +23,10 @@ import com.spring.mvc.mini.xml.ObjectClassXMLPaser;
 @RequestMapping("/objectclassxml")
 public class ObjectClassXmlController {
 	
-	static Logger LOGGER = LoggerFactory.getLogger(ObjectClassXmlController.class);
+	static Logger LOG = LoggerFactory.getLogger(ObjectClassXmlController.class);
 	
 	@Autowired
-	ObjectClassXMLPaser ocxp;
+	ObjectClassXMLPaser objectClassXMLPaser;
 	
 	@ModelAttribute
 	public void ajaxAttribute(WebRequest request, Model model) {
@@ -34,12 +34,12 @@ public class ObjectClassXmlController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public HttpEntity<byte[]> getXml(ModelMap map, HttpServletResponse response) {
+	public HttpEntity<byte[]> getObjectClassesXml(ModelMap map, HttpServletResponse response) {
 		
 		 byte[] documentBody=null;
 		
 			try {
-				documentBody = ocxp.getTextConent();
+				documentBody = objectClassXMLPaser.getTextConent();
 
 			} catch (Exception e) {
 				e.printStackTrace();

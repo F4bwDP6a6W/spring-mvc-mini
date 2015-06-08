@@ -28,134 +28,127 @@ import com.spring.mvc.mini.properties.Properties;
 import com.spring.mvc.mini.svn.SVNHandler;
 
 @Component
-public class  ObjectClassXMLPaser {
-	
-	static Logger LOGGER = LoggerFactory.getLogger(ObjectClassXMLPaser.class);
-	
+public class ObjectClassXMLPaser {
+
+    static Logger LOGGER = LoggerFactory.getLogger(ObjectClassXMLPaser.class);
+
     @Autowired
     private Properties properties;
-    
+
     @Autowired
-    private SVNHandler sh;
-		
-	public ArrayList<ObjectClass> objectClassMapping() throws Exception {
-		
-		LOGGER.info("Start to checkout");
-		sh.svnCheckout();
-		
-		// Get the DOM Builder Factory
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    private SVNHandler svnHandler;
 
-		// Get the DOM Builder
-		DocumentBuilder builder = factory.newDocumentBuilder();
+    public ArrayList<ObjectClass> objectClassMapping() throws Exception {
 
-		// Load and Parse the XML document
-		// document contains the complete XML as a Tree.
-		
-		File objclsFile = new File(properties.getXmlPath());
-	
-		Document document = builder.parse(objclsFile);
-		
-		ArrayList<ObjectClass> objclsList = new ArrayList<>();
+        LOGGER.info("Start to checkout");
+        svnHandler.svnCheckout();
 
-		// Iterating through the nodes and extracting the data.
-		NodeList nodeList = document.getDocumentElement().getChildNodes();
-		
-		ObjectClass objcls = null;
-		int commentcount = 0;
-		int elementcount = 0;
-		for (int i = 0; i < nodeList.getLength(); i++) {
-			
-			Node node = nodeList.item(i);
-			
-			if(node instanceof Comment){
-				objcls = new ObjectClass();
-				Comment c = (Comment)node;
-				objcls.setComment(c.getData());
-				commentcount ++;
-			}
-			
-			if (node instanceof Element) {
-				
-				objcls.setId(((Element) node).getAttribute("id").toString());
-				objcls.setAbbreviation(((Element) node).getAttribute("abbrev")
-						.toString());
-				objcls.setIntclass(Integer.parseInt(((Element) node).getAttribute("intclass")));
-				objcls.setName(((Element) node).getAttribute("name").toString());
-				objcls.setParents(((Element) node).getAttribute("parents")
-						.toString());
-				objcls.setPackageName(((Element) node).getAttribute("adaID")
-						.toString());
-				elementcount++;
-				objclsList.add(objcls);
-			}
-		}
-		
-		LOGGER.debug("commentcount is:" + commentcount);
-		LOGGER.debug("elementcount is:" + elementcount);
-		
-		return objclsList;
-	}
-	
-	public void AddObjectClass(ObjectClass objcls){
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
 
-		try {
-			
-			// Get the DOM Builder Factory
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        File objectClassesFile = new File(properties.getXmlPath());
 
-			// Get the DOM Builder
-			DocumentBuilder builder = factory.newDocumentBuilder();;
+        Document document = builder.parse(objectClassesFile);
 
+        ArrayList<ObjectClass> objectClasses = new ArrayList<>();
 
-		File objclsFile = new File(properties.getXmlPath());
-		
-		// Load and Parse the XML document
-		// document contains the complete XML as a Tree.
-		Document document = builder.parse(objclsFile);
+        NodeList nodeList = document.getDocumentElement().getChildNodes();
 
-		// Iterating through the nodes and extracting the data.
-			
-			Comment c = document.createComment(objcls.getComment());
-			
-			document.getDocumentElement().appendChild(c);
-			
-			Element objclselement = document.createElement("objclass");
-			objclselement.setAttribute("id", objcls.getId());
-			objclselement.setAttribute("intclass", String.valueOf(objcls.getIntclass()));
-			objclselement.setAttribute("abbrev", objcls.getAbbreviation());
-			objclselement.setAttribute("adaID", objcls.getPackageName());
-			objclselement.setAttribute("name", objcls.getName());
-			objclselement.setAttribute("parents", objcls.getParents());
-				
-			document.getDocumentElement().appendChild(objclselement);
-			
-			// write the content into xml file
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
-			Transformer transformer = transformerFactory.newTransformer();
-			DOMSource source = new DOMSource(document);
-			
-			StreamResult result = new StreamResult(new File(properties.getXmlPath()));
-	 
-			// Output to console for testing
-			// StreamResult result = new StreamResult(System.out);
-	 
-			transformer.transform(source, result);
-			
-		} catch (Exception e){
-			LOGGER.error(e.toString());
-		}
-	}
-	
-	public byte[] getTextConent() throws Exception {
-		
-		LOGGER.info("Start to checkout");
-		sh.svnCheckout();
-			
-		Path path = Paths.get(properties.getXmlPath());
-		
-		return Files.readAllBytes(path);
-		
-	}
-	
+        ObjectClass objectClass = null;
+        int commentcount = 0;
+        int elementcount = 0;
+        for (int i = 0; i < nodeList.getLength(); i++) {
+
+            Node node = nodeList.item(i);
+
+            if (node instanceof Comment) {
+                objectClass = setCommentToObject((Comment) node);
+                commentcount++;
+            }
+
+            if (node instanceof Element) {
+
+                setElementToObject(objectClass, (Element) node);
+                elementcount++;
+                objectClasses.add(objectClass);
+            }
+        }
+
+        LOGGER.debug("commentcount is:" + commentcount);
+        LOGGER.debug("elementcount is:" + elementcount);
+
+        return objectClasses;
+    }
+
+    private ObjectClass setCommentToObject(Comment node) {
+        ObjectClass objectClass;
+        objectClass = new ObjectClass();
+        objectClass.setComment(node.getData());
+        return objectClass;
+    }
+
+    private void setElementToObject(ObjectClass objectClass, Element node) {
+        objectClass.setId(node.getAttribute("id").toString());
+        objectClass.setAbbreviation(node.getAttribute("abbrev")
+                .toString());
+        objectClass.setIntclass(Integer.parseInt(node.getAttribute("intclass")));
+        objectClass.setName(node.getAttribute("name").toString());
+        objectClass.setParents(node.getAttribute("parents")
+                .toString());
+        objectClass.setPackageName(node.getAttribute("adaID")
+                .toString());
+    }
+
+    public void AddObjectClass(ObjectClass objectClass) {
+
+        try {
+
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+            DocumentBuilder builder = factory.newDocumentBuilder();
+
+            File objectClassesFile = new File(properties.getXmlPath());
+
+            Document document = builder.parse(objectClassesFile);
+
+            Comment c = document.createComment(objectClass.getComment());
+
+            document.getDocumentElement().appendChild(c);
+            document.getDocumentElement().appendChild(getElementOfObjectClass(objectClass, document));
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(document);
+
+            StreamResult result = new StreamResult(new File(properties.getXmlPath()));
+
+            transformer.transform(source, result);
+
+        } catch (Exception e) {
+            LOGGER.error(e.toString());
+        }
+    }
+
+    private Element getElementOfObjectClass(ObjectClass objectClass, Document document) {
+        Element e = document.createElement("objclass");
+        e.setAttribute("id", objectClass.getId());
+        e.setAttribute("intclass", String.valueOf(objectClass.getIntclass()));
+        e.setAttribute("abbrev", objectClass.getAbbreviation());
+        e.setAttribute("adaID", objectClass.getPackageName());
+        e.setAttribute("name", objectClass.getName());
+        e.setAttribute("parents", objectClass.getParents());
+        return e;
+    }
+
+    public byte[] getTextConent() throws Exception {
+
+        LOGGER.info("Start to checkout");
+        svnHandler.svnCheckout();
+
+        Path path = Paths.get(properties.getXmlPath());
+
+        return Files.readAllBytes(path);
+
+    }
+
 }

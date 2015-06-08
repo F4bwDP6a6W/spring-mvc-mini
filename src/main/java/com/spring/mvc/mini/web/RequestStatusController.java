@@ -28,13 +28,12 @@ import com.spring.mvc.mini.pojo.UserInfo;
 
 @Controller
 @RequestMapping("/requeststatus")
-//@SessionAttributes({"requeststatus"} )
 public class RequestStatusController {
 	
 	static Logger LOGGER = LoggerFactory.getLogger(RequestStatusController.class);
 	
 	@Autowired
-	RequestStatusJsonParser rsjm;
+	RequestStatusJsonParser requestStatusJsonParser;
 	
 	@Autowired
 	MailSender ms;
@@ -44,20 +43,15 @@ public class RequestStatusController {
 		model.addAttribute("ajaxRequest", AjaxUtils.isAjaxRequest(request));
 	}
 	
-//	@ModelAttribute("requeststatus")
-//	public miniequestStatus createRequestStatus() {
-//		return new miniequestStatus();
-//	}
-	
 	@RequestMapping(method = RequestMethod.GET)
-	public void objectClassForm(Model model) {
+	public void handleObjectClassForm(Model model) {
 		model.addAttribute("miniequeststatus", new RequestStatus());
 	}
 	
 	@RequestMapping(params={"mocrid"},method=RequestMethod.GET)
-	public void objectClassFormWithParam(@RequestParam String mocrid, Model model) {
+	public void enrichObjectClassFormWithParam(@RequestParam String mocrid, Model model) {
 		
-		ArrayList<RequestStatus> mrsList = rsjm.readStatus();
+		ArrayList<RequestStatus> mrsList = requestStatusJsonParser.readStatus();
 		
 		for(RequestStatus mrs:mrsList){
 			
@@ -70,24 +64,14 @@ public class RequestStatusController {
 	}
 
 	@RequestMapping(method=RequestMethod.POST)
-	public String processSubmit(@ModelAttribute("miniequeststatus") RequestStatus miniequeststatus,
-								@ModelAttribute("ajaxRequest") boolean ajaxRequest, 
-								Model model, RedirectAttributes redirectAttrs) {
+	public String submit(@ModelAttribute("miniequeststatus") RequestStatus miniequeststatus,
+						 @ModelAttribute("ajaxRequest") boolean ajaxRequest,
+						 Model model, RedirectAttributes redirectAttrs) {
 		
 		if(miniequeststatus.getObjectClassListType() == null){
-			ArrayList<RequestStatus> mrsList = rsjm.readStatus();
+			ArrayList<RequestStatus> mrsList = requestStatusJsonParser.readStatus();
 			
-			boolean boo = false;
-			for(RequestStatus mrs:mrsList){
-				
-				if(mrs.getmocrid() == miniequeststatus.getmocrid()){
-					
-					model.addAttribute("miniequeststatus", mrs);
-					boo = true;
-				}
-			}
-			
-			if (boo){
+			if (isMocridEquals(miniequeststatus, model, mrsList)){
 				model.addAttribute("message", "SUCCESS:MO CR ID:"+miniequeststatus.getmocrid()+" is presenting.");
 				return null;
 			} else {
@@ -96,72 +80,83 @@ public class RequestStatusController {
 			}
 		}
 		
-		ArrayList<RequestStatus> mrsl =  rsjm.readStatus();
+		ArrayList<RequestStatus> requestStatuses =  requestStatusJsonParser.readStatus();
 		
 		int index = 0;
-		for (RequestStatus item:mrsl){
+		for (RequestStatus item:requestStatuses){
 			if(item.getmocrid() == miniequeststatus.getmocrid()){
-				index = mrsl.indexOf(item);
+				index = requestStatuses.indexOf(item);
 				break;
 			}
 		}
 		
-		mrsl.get(index).setComments(miniequeststatus.getComments());
-		mrsl.get(index).setObjectClassListType(miniequeststatus.getObjectClassListType());
+		requestStatuses.get(index).setComments(miniequeststatus.getComments());
+		requestStatuses.get(index).setObjectClassListType(miniequeststatus.getObjectClassListType());
 		
-		RequestStatusListType mrslt = new RequestStatusListType();
+		RequestStatusListType type = new RequestStatusListType();
 		
-		mrslt.setRequestStatuses(mrsl);
-		rsjm.writeStatus(mrslt);
+		type.setRequestStatuses(requestStatuses);
+		requestStatusJsonParser.writeStatus(type);
 		
-		LOGGER.debug(mrslt.toString());
-		
-		StringBuffer subjectsb = new StringBuffer();
-		subjectsb.append("MO CR:");
-		subjectsb.append(miniequeststatus.getmocrid());
-		subjectsb.append(" Updated");
-		
-		StringBuffer textsb = new StringBuffer();
-		textsb.append("New Comments: \r\n");
-		textsb.append(miniequeststatus.getComments());
-		textsb.append(" \r\n");
-		
+		LOGGER.debug(type.toString());
+
 		try {
-			if(!mrsl.get(index).getObjectClassListType().equals(miniequeststatus.getObjectClassListType())){
-				textsb.append("Object Classes updated: \r\n");
-				textsb.append(miniequeststatus.getObjectClassListType().toString());
-			}
-			
-			textsb.append("http://localhost:8080/spring-mvc-mini/requeststatus?mocrid=");
-			textsb.append(miniequeststatus.getmocrid());
-			textsb.append(" \r\n");
-			textsb.append(" \r\n");
-		
-			this.commentAndSendMail(mrsl.get(index).getUserinfo(), subjectsb.toString(), textsb.toString());
-		} catch (MessagingException e) {
+			this.commentAndSendMail(requestStatuses.get(index).getUserinfo(), constructMailSubject(miniequeststatus), constructMailText(miniequeststatus, requestStatuses, index));
+		} catch (Exception e) {
 			model.addAttribute("message", e.toString());
 			return null;
-		} catch (NullPointerException e){
-			model.addAttribute("message", "FAILED:The MO CR id is not existing!");
-			return null;	
 		}
 
 		String message = "Your update was submitted.";
 		
-		// Success response handling
 		if (ajaxRequest) {
-			// prepare model for rendering success message in this request
 			model.addAttribute("message", message);
 			return null;
 		} else {
-			// store a success message for rendering on the next request after redirect
-			// redirect back to the form to render the success message along with newly bound values
-			//			redirectAttrs.addFlashAttribute("message", message);
 			return "redirect:/requeststatus";			
 		}
 	}
-	
-	public void commentAndSendMail(UserInfo userinfo ,String subject, String text) throws AddressException, MessagingException{
+
+	private String constructMailText(@ModelAttribute("miniequeststatus") RequestStatus miniequeststatus, ArrayList<RequestStatus> requestStatuses, int index) {
+		StringBuffer textsb = new StringBuffer();
+		textsb.append("New Comments: \r\n");
+		textsb.append(miniequeststatus.getComments());
+		textsb.append(" \r\n");
+
+		if(!requestStatuses.get(index).getObjectClassListType().equals(miniequeststatus.getObjectClassListType())){
+			textsb.append("Object Classes updated: \r\n");
+			textsb.append(miniequeststatus.getObjectClassListType().toString());
+		}
+
+		textsb.append("http://localhost:8080/spring-mvc-mini/requeststatus?mocrid=");
+		textsb.append(miniequeststatus.getmocrid());
+		textsb.append(" \r\n");
+		textsb.append(" \r\n");
+		return textsb.toString();
+	}
+
+	private String constructMailSubject(@ModelAttribute("miniequeststatus") RequestStatus miniequeststatus) {
+		StringBuffer subjectsb = new StringBuffer();
+		subjectsb.append("MO CR:");
+		subjectsb.append(miniequeststatus.getmocrid());
+		subjectsb.append(" Updated");
+		return subjectsb.toString();
+	}
+
+	private boolean isMocridEquals(@ModelAttribute("miniequeststatus") RequestStatus miniequeststatus, Model model, ArrayList<RequestStatus> mrsList) {
+		boolean boo = false;
+		for(RequestStatus mrs:mrsList){
+
+            if(mrs.getmocrid() == miniequeststatus.getmocrid()){
+
+                model.addAttribute("miniequeststatus", mrs);
+                boo = true;
+            }
+        }
+		return boo;
+	}
+
+	public void commentAndSendMail(UserInfo userinfo ,String subject, String text) throws Exception{
 		
 		Address[] toAddress = {new InternetAddress(userinfo.getEmail())};
 		

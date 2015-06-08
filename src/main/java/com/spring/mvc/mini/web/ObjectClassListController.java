@@ -24,119 +24,116 @@ import com.spring.mvc.mini.xml.ObjectClassXMLPaser;
 @RequestMapping("/objectclasslist")
 @SessionAttributes("productList")
 public class ObjectClassListController {
-	
-	static Logger LOGGER = LoggerFactory.getLogger(ObjectClassListController.class);
-	
-	@Autowired
-	ObjectClassXMLPaser ocxp;
-	
-	@ModelAttribute
-	public void ajaxAttribute(WebRequest request, Model model) {
-		model.addAttribute("ajaxRequest", AjaxUtils.isAjaxRequest(request));
-	}
 
-	
-	@RequestMapping(method = RequestMethod.GET)
-	public String objectClassListType(Model model, @ModelAttribute("page") String page ) {
+    static Logger LOG = LoggerFactory.getLogger(ObjectClassListController.class);
 
- 			ArrayList<ObjectClass> ojbclslist = null;
- 			try {
- 				ojbclslist = ocxp.objectClassMapping();
- 				Collections.reverse(ojbclslist);
- 			} catch (Exception e) {
- 				e.printStackTrace();
- 			}
- 			
- 			PagedListHolder<ArrayList<ObjectClass>> productList = new PagedListHolder(ojbclslist);
-	        productList.setPageSize(100);
-	        
-	        model.addAttribute("productList",productList);
-	        return null;
-	}
-	
-	@RequestMapping(params={"jumppage"}, method = RequestMethod.GET)
-	public String objectClassPagination(Model model, @ModelAttribute("jumppage") String jumppage, @ModelAttribute("productList") PagedListHolder<ArrayList<ObjectClass>> productList ) {
-			
-			LOGGER.info("@RequestMapping(params={\"jumppage\"}, method = RequestMethod.GET)");
-        	 if (jumppage == null) {
-    	        
-     	    } else {
-     	    	
-     	        if ("next".equals(jumppage)) {
-     	        	productList.nextPage();
-     	        }
-     	        else if ("previous".equals(jumppage)) {
-     	        	productList.previousPage();
-     	        } else if (isInteger(jumppage) > 0){
-     	        	productList.setPage(isInteger(jumppage));
-     	        } 
-     	    }
-        
-	        model.addAttribute("productList",productList);
-	        return null;
-	}
+    @Autowired
+    ObjectClassXMLPaser objectClassXMLPaser;
 
-	@RequestMapping(params={"searchcritical"}, method = RequestMethod.GET)
-	public String objectClassSearch(Model model, @ModelAttribute("searchcritical") String searchcritical ) {
-			
-			LOGGER.info("@RequestMapping(params={\"searchcritical\"}, method = RequestMethod.GET)");
-			ArrayList<ObjectClass> searchOjbclslist = null;
-        	 if (searchcritical == null) {
-    	        
-     	    } else {
-     	    	
-     			ArrayList<ObjectClass> ojbclslist = null;
-     			searchOjbclslist = new ArrayList<ObjectClass>();
-     			try {
-     				ojbclslist = ocxp.objectClassMapping();
-     				
-     				for(ObjectClass ojbcls:ojbclslist){
-     					if (ojbcls.match(searchcritical)){
-     						searchOjbclslist.add(ojbcls);
-     					}
-     				}
-     				
-     			} catch (Exception e) {
-     				e.printStackTrace();
-     			}
-     	    }
-        	 
-        	 PagedListHolder<ArrayList<ObjectClass>> productList = new PagedListHolder(searchOjbclslist);
-        	 productList.setPageSize(50);
-        	 
-	        model.addAttribute("productList",productList);
-	        return null;
-	}
-	
-	@RequestMapping(method=RequestMethod.POST)
-	public String processSubmit(Model model, @ModelAttribute("page") String page, 
-			@ModelAttribute("productList") PagedListHolder<ArrayList<ObjectClass>> productList,
-								@ModelAttribute("ajaxRequest") boolean ajaxRequest, RedirectAttributes redirectAttrs) {
+    @ModelAttribute
+    public void ajaxAttribute(WebRequest request, Model model) {
+        model.addAttribute("ajaxRequest", AjaxUtils.isAjaxRequest(request));
+    }
 
-		LOGGER.info("@RequestMapping(method=RequestMethod.POST)");
-		String message = "Form submitted successfully.  Bound ";
-		// Success response handling
-		if (ajaxRequest) {
-			// prepare model for rendering success message in this request
-			model.addAttribute("message", message);
-			return null;
-		} else {
-			// store a success message for rendering on the next request after redirect
-			// redirect back to the form to render the success message along with newly bound values
-			redirectAttrs.addFlashAttribute("message", message);
-			return "redirect:/objectclasslist";			
-		}
-	}
-	
-	public int isInteger(String s) {
-		int i;
-	    try { 
-	        i = Integer.parseInt(s); 
-	    } catch(NumberFormatException e) { 
-	        return -1; 
-	    }
-	    // only got here if we didn't return false
-	    return i;
-	}
-	
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String enrichObjectClassListType(Model model, @ModelAttribute("page") String page) {
+
+        ArrayList<ObjectClass> ojbclslist = getObjectClasses();
+
+        Collections.reverse(ojbclslist);
+        PagedListHolder<ArrayList<ObjectClass>> productList = new PagedListHolder(ojbclslist);
+        productList.setPageSize(100);
+
+        model.addAttribute("productList", productList);
+        return null;
+    }
+
+    private ArrayList<ObjectClass> getObjectClasses() {
+        ArrayList<ObjectClass> ojbclslist = null;
+        try {
+            ojbclslist = objectClassXMLPaser.objectClassMapping();
+
+        } catch (Exception e) {
+            LOG.error("get XML Object Class exception", e);
+        }
+        return ojbclslist;
+    }
+
+    @RequestMapping(params = {"jumppage"}, method = RequestMethod.GET)
+    public String handleObjectClassPagination(Model model, @ModelAttribute("jumppage") String jumppage, @ModelAttribute("productList") PagedListHolder<ArrayList<ObjectClass>> productList) {
+
+        LOG.info("@RequestMapping(params={\"jumppage\"}, method = RequestMethod.GET)");
+        if (jumppage == null) {
+
+        } else {
+
+            if ("next".equals(jumppage)) {
+                productList.nextPage();
+            } else if ("previous".equals(jumppage)) {
+                productList.previousPage();
+            } else if (isInteger(jumppage) > 0) {
+                productList.setPage(isInteger(jumppage));
+            }
+        }
+
+        model.addAttribute("productList", productList);
+        return null;
+    }
+
+    @RequestMapping(params = {"searchcritical"}, method = RequestMethod.GET)
+    public String searchObjectClass(Model model, @ModelAttribute("searchcritical") String searchcritical) {
+
+        LOG.info("@RequestMapping(params={\"searchcritical\"}, method = RequestMethod.GET)");
+        ArrayList<ObjectClass> searchOjbclslist = null;
+        if (searchcritical == null) {
+
+        } else {
+
+            ArrayList<ObjectClass> ojbclslist = getObjectClasses();
+
+            searchOjbclslist = new ArrayList<ObjectClass>();
+            for (ObjectClass ojbcls : ojbclslist) {
+                if (ojbcls.match(searchcritical)) {
+                    searchOjbclslist.add(ojbcls);
+                }
+            }
+        }
+
+        PagedListHolder<ArrayList<ObjectClass>> productList = new PagedListHolder(searchOjbclslist);
+        productList.setPageSize(50);
+
+        model.addAttribute("productList", productList);
+        return null;
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String submit(Model model, @ModelAttribute("page") String page,
+                         @ModelAttribute("productList") PagedListHolder<ArrayList<ObjectClass>> productList,
+                         @ModelAttribute("ajaxRequest") boolean ajaxRequest, RedirectAttributes redirectAttrs) {
+
+        LOG.info("@RequestMapping(method=RequestMethod.POST)");
+        String message = "Form submitted successfully.  Bound ";
+
+        if (ajaxRequest) {
+
+            model.addAttribute("message", message);
+            return null;
+        } else {
+
+            redirectAttrs.addFlashAttribute("message", message);
+            return "redirect:/objectclasslist";
+        }
+    }
+
+    public int isInteger(String s) {
+        int i;
+        try {
+            i = Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+        return i;
+    }
+
 }

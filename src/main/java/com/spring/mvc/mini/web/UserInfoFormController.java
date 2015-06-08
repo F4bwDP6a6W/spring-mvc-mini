@@ -42,13 +42,13 @@ public class UserInfoFormController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public String processSubmit(UserInfo userinfo,
-								@ModelAttribute("ajaxRequest") boolean ajaxRequest, 
-								Model model, RedirectAttributes redirectAttrs) {
+	public String submit(UserInfo userinfo,
+						 @ModelAttribute("ajaxRequest") boolean ajaxRequest,
+						 Model model, RedirectAttributes redirectAttrs) {
 		
 		try {
 			loginAndSendMail(userinfo);
-		} catch (MessagingException e) {
+		} catch (Exception e) {
 			model.addAttribute("message", "Login Failed:"+e.toString());
 			return null;
 		}
@@ -56,20 +56,19 @@ public class UserInfoFormController {
 		String message="Login Successful, Click ObjecClassForm to continue.";
 		model.addAttribute("userinfo", userinfo);
 		
-		// Success response handling
+
 		if (ajaxRequest) {
-			// prepare model for rendering success message in this request		
+
 			model.addAttribute("message", message);
 			return null;
 		} else {
-			// store a success message for rendering on the next request after redirect
-			// redirect back to the form to render the success message along with newly bound values
+
 			redirectAttrs.addFlashAttribute("message", message);
 			return "redirect:/";			
 		}
 	}
 	
-	public void loginAndSendMail(UserInfo userinfo) throws AddressException, MessagingException{
+	public void loginAndSendMail(UserInfo userinfo) throws Exception{
 		
 		String subject = "Login successfully to mvc mini";
 		String text="Welcome you,"+userinfo.getUsername()+"!\r\nYou can reserve the object classes now.";

@@ -81,7 +81,7 @@ public class RequestStatus {
     public String toString() {
         return "RequestStatus [id=" + id + ", submitDate="
                 + submitDate + ", commitDate=" + commitDate + ", holdDate="
-                + holdDate + ", objectClassListType=" + objectClassListType
+                + holdDate + ", enrichObjectClassListType=" + objectClassListType
                 + ", userinfo=" + userinfo + ", status=" + status
                 + ", comments=" + comments + "]";
     }
