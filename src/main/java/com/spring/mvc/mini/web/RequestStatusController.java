@@ -43,7 +43,7 @@ public class RequestStatusController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public void handleObjectClassForm(Model model) {
-		model.addAttribute("miniequeststatus", new RequestStatus());
+		model.addAttribute("requestStatus", new RequestStatus());
 	}
 	
 	@RequestMapping(params={"mocrid"},method=RequestMethod.GET)
@@ -55,26 +55,26 @@ public class RequestStatusController {
 			
 			if(mrs.getmocrid() == Integer.parseInt(mocrid)){
 				LOGGER.debug("mrs.getmocrid() is:"+mrs.getmocrid());
-				model.addAttribute("miniequeststatus", mrs);
+				model.addAttribute("requestStatus", mrs);
 			}
 		}
 		
 	}
 
 	@RequestMapping(method=RequestMethod.POST)
-	public String submit(@ModelAttribute("miniequeststatus") RequestStatus miniequeststatus,
+	public String submit(@ModelAttribute("requestStatus") RequestStatus requestStatus,
 						 @ModelAttribute("ajaxRequest") boolean ajaxRequest,
 						 Model model, RedirectAttributes redirectAttrs) {
 		
-		if(miniequeststatus.getObjectClassesType() == null){
+		if(requestStatus.getObjectClassesType() == null){
 			ArrayList<RequestStatus> mrsList = requestStatusJsonParser.readStatus();
 			
-			if (isMocridEquals(miniequeststatus, model, mrsList)){
-				model.addAttribute("message", "SUCCESS:MO CR ID:"+miniequeststatus.getmocrid()+" is presenting.");
+			if (isMocridEquals(requestStatus, model, mrsList)){
+				model.addAttribute("message", "SUCCESS:MO CR ID:"+requestStatus.getmocrid()+" is presenting.");
 				return null;
 			} else {
-				model.addAttribute("miniequeststatus", new RequestStatus());
-				model.addAttribute("message", "FAILED:MO CR ID:"+miniequeststatus.getmocrid()+" is not existing.");
+				model.addAttribute("requestStatus", new RequestStatus());
+				model.addAttribute("message", "FAILED:MO CR ID:"+requestStatus.getmocrid()+" is not existing.");
 			}
 		}
 		
@@ -82,14 +82,14 @@ public class RequestStatusController {
 		
 		int index = 0;
 		for (RequestStatus item:requestStatuses){
-			if(item.getmocrid() == miniequeststatus.getmocrid()){
+			if(item.getmocrid() == requestStatus.getmocrid()){
 				index = requestStatuses.indexOf(item);
 				break;
 			}
 		}
 		
-		requestStatuses.get(index).setComments(miniequeststatus.getComments());
-		requestStatuses.get(index).setObjectClassesType(miniequeststatus.getObjectClassesType());
+		requestStatuses.get(index).setComments(requestStatus.getComments());
+		requestStatuses.get(index).setObjectClassesType(requestStatus.getObjectClassesType());
 		
 		RequestStatusListType type = new RequestStatusListType();
 		
@@ -99,7 +99,7 @@ public class RequestStatusController {
 		LOGGER.debug(type.toString());
 
 		try {
-			this.commentAndSendMail(requestStatuses.get(index).getUserinfo(), constructMailSubject(miniequeststatus), constructMailText(miniequeststatus, requestStatuses, index));
+			this.commentAndSendMail(requestStatuses.get(index).getUserinfo(), constructMailSubject(requestStatus), constructMailText(requestStatus, requestStatuses, index));
 		} catch (Exception e) {
 			model.addAttribute("message", e.toString());
 			return null;
@@ -115,39 +115,39 @@ public class RequestStatusController {
 		}
 	}
 
-	private String constructMailText(@ModelAttribute("miniequeststatus") RequestStatus miniequeststatus, ArrayList<RequestStatus> requestStatuses, int index) {
+	private String constructMailText(@ModelAttribute("requestStatus") RequestStatus requestStatus, ArrayList<RequestStatus> requestStatuses, int index) {
 		StringBuffer textsb = new StringBuffer();
 		textsb.append("New Comments: \r\n");
-		textsb.append(miniequeststatus.getComments());
+		textsb.append(requestStatus.getComments());
 		textsb.append(" \r\n");
 
-		if(!requestStatuses.get(index).getObjectClassesType().equals(miniequeststatus.getObjectClassesType())){
+		if(!requestStatuses.get(index).getObjectClassesType().equals(requestStatus.getObjectClassesType())){
 			textsb.append("Object Classes updated: \r\n");
-			textsb.append(miniequeststatus.getObjectClassesType().toString());
+			textsb.append(requestStatus.getObjectClassesType().toString());
 		}
 
 		textsb.append("http://localhost:8080/spring-mvc-mini/requeststatus?mocrid=");
-		textsb.append(miniequeststatus.getmocrid());
+		textsb.append(requestStatus.getmocrid());
 		textsb.append(" \r\n");
 		textsb.append(" \r\n");
 		return textsb.toString();
 	}
 
-	private String constructMailSubject(@ModelAttribute("miniequeststatus") RequestStatus miniequeststatus) {
+	private String constructMailSubject(@ModelAttribute("requestStatus") RequestStatus requestStatus) {
 		StringBuffer subjectsb = new StringBuffer();
 		subjectsb.append("MO CR:");
-		subjectsb.append(miniequeststatus.getmocrid());
+		subjectsb.append(requestStatus.getmocrid());
 		subjectsb.append(" Updated");
 		return subjectsb.toString();
 	}
 
-	private boolean isMocridEquals(@ModelAttribute("miniequeststatus") RequestStatus miniequeststatus, Model model, ArrayList<RequestStatus> mrsList) {
+	private boolean isMocridEquals(@ModelAttribute("requestStatus") RequestStatus requestStatus, Model model, ArrayList<RequestStatus> mrsList) {
 		boolean boo = false;
 		for(RequestStatus mrs:mrsList){
 
-            if(mrs.getmocrid() == miniequeststatus.getmocrid()){
+            if(mrs.getmocrid() == requestStatus.getmocrid()){
 
-                model.addAttribute("miniequeststatus", mrs);
+                model.addAttribute("requestStatus", mrs);
                 boo = true;
             }
         }

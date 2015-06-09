@@ -16,7 +16,7 @@
 		<p>
 			Enter the MO CR id to check request status and give comments.
 		</p>
-		<form:form id="form3" method="post" modelAttribute="miniequeststatus" cssClass="cleanform">
+		<form:form id="form3" method="post" modelAttribute="requestStatus" cssClass="cleanform">
 			<div class="header">
 		  		<c:if test="${not empty message}">
 					<div id="message" class="success">${message}</div>	
@@ -31,62 +31,62 @@
 		  			<label>
 					MO CR id
 					</label>
-			  		<input name="mocrid" value="${miniequeststatus.mocrid}">
+			  		<input name="mocrid" value="${requestStatus.mocrid}">
 			  		
 					<label>
 					Applicant email
 					</label>
-			  		<input name="userinfo.email" value="${miniequeststatus.userinfo.email}" readonly>
+			  		<input name="userinfo.email" value="${requestStatus.userinfo.email}" readonly>
 			  					  		
 					<label>
 					Status
 					</label>
-					<input name="status" value="${miniequeststatus.status}" readonly>
+					<input name="status" value="${requestStatus.status}" readonly>
 					
 					<label>
 					comments
 					</label>
-					<textarea form ="form3" name="comments" cols="45" wrap="soft">${miniequeststatus.comments}</textarea>		
+					<textarea form ="form3" name="comments" cols="45" wrap="soft">${requestStatus.comments}</textarea>		
 			  		
 			  		
 		  	</fieldset>						  			
-            <c:forEach items="${miniequeststatus.ojbclslisttype.objectclasslist}" var="objcls" varStatus="i" begin="0">
+            <c:forEach items="${requestStatus.objectClassesType.objectClasses}" var="objectClass" varStatus="i" begin="0">
             	<fieldset>	
             			<legend>Object Class Info: ${i.index+1} </legend>
 					<label>
 						id
 					</label>
-			  		<input name="ojbclslisttype.objectclasslist[${i.index}].id" value="${objcls.id}">
+			  		<input name="objectClassesType.objectClasses[${i.index}].id" value="${objectClass.id}">
 			
 			  		<label>
 				  		intclass 
 				 	</label>
-			  		<input name="ojbclslisttype.objectclasslist[${i.index}].intclass" value="${objcls.intclass}" readonly>
+			  		<input name="objectClassesType.objectClasses[${i.index}].intclass" value="${objectClass.intclass}" readonly>
 			  		
 			  		<label>
 			  			abbrev 
 			 		</label>
-			  		<input name="ojbclslisttype.objectclasslist[${i.index}].abbrev" value="${objcls.abbrev}">
+			  		<input name="objectClassesType.objectClasses[${i.index}].abbreviation" value="${objectClass.abbrev}">
 			  		 
 			  		<label>
 			  			adaID
 			  		</label>
-			  		<input name="ojbclslisttype.objectclasslist[${i.index}].adaID" value="${objcls.adaID}">
+			  		<input name="objectClassesType.objectClasses[${i.index}].packageName" value="${objectClass.packageName}">
 			
 			  		<label>
 			  			name 
 			  		</label>
-			  		<input name="ojbclslisttype.objectclasslist[${i.index}].name" value="${objcls.name}">
+			  		<input name="objectClassesType.objectClasses[${i.index}].name" value="${objectClass.name}">
 			  		
 			  		<label>
 			  			parents
 			  		</label>
-		  			<input name="ojbclslisttype.objectclasslist[${i.index}].parents" value="${objcls.parents}">
+		  			<input name="objectClassesType.objectClasses[${i.index}].parents" value="${objectClass.parents}">
 		  			
 		  			<label>
 			  			comment
 			  		</label>
-		  			<input name="ojbclslisttype.objectclasslist[${i.index}].comment" value="${objcls.comment}" readonly>
+		  			<input name="objectClassesType.objectClasses[${i.index}].comment" value="${objectClass.comment}" readonly>
 				</fieldset>
 		      </c:forEach>
 			<p><button type="submit">Submit</button></p>
