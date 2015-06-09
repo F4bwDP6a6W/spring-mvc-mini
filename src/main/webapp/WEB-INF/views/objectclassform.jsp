@@ -6,7 +6,7 @@
 <c:if test="${!ajaxRequest}">
 <html>
 <head>
-	<title>objectclasslist forms | mini</title>
+	<title>objectClasses forms | mini</title>
 	<link href="<c:url value="/resources/form.css" />" rel="stylesheet"  type="text/css" />		
 	<script type="text/javascript" src="<c:url value="/resources/jquery/1.6/jquery.js" />"></script>
 </head>
@@ -20,7 +20,7 @@
 			More than 1, please select "Add More" button.
 		</p>
 		<p id="waitmessage"></p>
-		<form:form id="form2" method="post" modelAttribute="ojbclslisttype" cssClass="cleanform">
+		<form:form id="form2" method="post" modelAttribute="objectClassesType" cssClass="cleanform">
 			<div class="header">
 		  		<c:if test="${not empty message}">
 					<div id="message" class="success">${message}</div>	
@@ -32,43 +32,43 @@
 		  		</s:bind>
 			</div>
 		  								  			
-            <c:forEach items="${ojbclslisttype.objectclasslist}" var="objcls" varStatus="i" begin="0">
+            <c:forEach items="${objectClassesType.objectClasses}" var="objectClass" varStatus="i" begin="0">
             	<fieldset>	
             			<legend>Object Class Info: ${i.index+1} </legend>
 					<label>
 						id
 					</label>
-			  		<input name="objectclasslist[${i.index}].id" value="${objcls.id}">
+			  		<input name="objectClasses[${i.index}].id" value="${objectClass.id}">
 			
 			  		<label>
 			  			intclass 
 			 		</label>
-			  		<input name="objectclasslist[${i.index}].intclass" value="${objcls.intclass}" readonly>
+			  		<input name="objectClasses[${i.index}].intclass" value="${objectClass.intclass}" readonly>
 			  		
 			  		<label>
 			  			abbrev 
 			 		</label>
-			  		<input name="objectclasslist[${i.index}].abbrev" value="${objcls.abbrev}">
+			  		<input name="objectClasses[${i.index}].abbreviation" value="${objectClass.abbreviation}">
 			  		 
 			  		<label>
 			  			adaID
 			  		</label>
-			  		<input name="objectclasslist[${i.index}].adaID" value="${objcls.adaID}">
+			  		<input name="objectClasses[${i.index}].packageName" value="${objectClass.packageName}">
 			
 			  		<label>
 			  			name 
 			  		</label>
-			  		<input name="objectclasslist[${i.index}].name" value="${objcls.name}">
+			  		<input name="objectClasses[${i.index}].name" value="${objectClass.name}">
 			  		
 			  		<label>
 			  			parents
 			  		</label>
-		  			<input name="objectclasslist[${i.index}].parents" value="${objcls.parents}">
+		  			<input name="objectClasses[${i.index}].parents" value="${objectClass.parents}">
 		  			
 		  			<label>
 			  			comment
 			  		</label>
-		  			<input name="objectclasslist[${i.index}].comment" value="${objcls.comment}" readonly>
+		  			<input name="objectClasses[${i.index}].comment" value="${objectClass.comment}" readonly>
 				</fieldset>
 		      </c:forEach>
 		  	
@@ -89,7 +89,7 @@
 				});		
 				$("#addmore").click(function() {
 					 $.post("/spring-mvc-mini/objectclassform" ,
-							$("#form2").serialize()+"&objclscount=${fn:length(ojbclslisttype.objectclasslist)}",
+							$("#form2").serialize()+"&objclscount=${fn:length(ojbclslisttype.objectClasses)}",
 							 function(html){$("#formsContent2").replaceWith(html);}
 							 );
 				});	

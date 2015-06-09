@@ -82,7 +82,7 @@ public class ScheduleFileUpdator {
         s.append(status.getmocrid());
         s.append(" for ");
 
-        for (ObjectClass objcls : status.getObjectClassListType().getObjectClasses()) {
+        for (ObjectClass objcls : status.getObjectClassesType().getObjectClasses()) {
             objectClassXMLPaser.AddObjectClass(objcls);
             s.append(objcls.getAbbreviation());
         }

@@ -60,36 +60,36 @@ public class ObjectClassFormController {
     }
 
     @ModelAttribute("mocrid")
-    public String createmocrid() {
+    public String createMocrid() {
         return String.valueOf(1 + requestStatusJsonParser.getLatestmocrid());
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public void HandleObjectClassForm(Model model, @ModelAttribute("userinfo") UserInfo userinfo, @ModelAttribute("mocrid") String mocrid) {
-        ObjectClassListType type = new ObjectClassListType();
+    public void handleObjectClassForm(Model model, @ModelAttribute("userinfo") UserInfo userinfo, @ModelAttribute("mocrid") String mocrid) {
+        ObjectClassesType objectClassesType = new ObjectClassesType();
 
         ArrayList<ObjectClass> objectClasses = new ArrayList<ObjectClass>();
         objectClasses.add(createObjectClassInstance(0, userinfo, mocrid));
 
-        type.setObjectClasses(objectClasses);
+        objectClassesType.setObjectClasses(objectClasses);
 
-        model.addAttribute("ojbclslisttype", type);
+        model.addAttribute("objectClassesType", objectClassesType);
     }
 
 
     //Add More
     @RequestMapping(params = {"objclscount"}, method = RequestMethod.POST)
-    public void handleObjectClassFormWithParam(@Valid ObjectClassListType objectClassListType, @ModelAttribute("userinfo") UserInfo userinfo, @ModelAttribute("mocrid") String mocrid, @RequestParam String ObjectClassCount, Model model) {
+    public void handleObjectClassFormWithParam(@Valid ObjectClassesType objectClassesType, @ModelAttribute("userinfo") UserInfo userinfo, @ModelAttribute("mocrid") String mocrid, @RequestParam String ObjectClassCount, Model model) {
 
-        ArrayList<ObjectClass> objectClasses = objectClassListType.getObjectClasses();
+        ArrayList<ObjectClass> objectClasses = objectClassesType.getObjectClasses();
         objectClasses.add(createObjectClassInstance(Integer.parseInt(ObjectClassCount), userinfo, mocrid));
-        objectClassListType.setObjectClasses(objectClasses);
-        model.addAttribute("ojbclslisttype", objectClassListType);
+        objectClassesType.setObjectClasses(objectClasses);
+        model.addAttribute("ObjectClassesType", objectClassesType);
     }
 
     //Submit
     @RequestMapping(method = RequestMethod.POST)
-    public String handleSubmit(ObjectClassListType objectClassListType, @ModelAttribute("userinfo") UserInfo userinfo,
+    public String handleSubmit(ObjectClassesType objectClassesType, @ModelAttribute("userinfo") UserInfo userinfo,
                                @ModelAttribute("mocrid") String mocrid,
                                @ModelAttribute("ajaxRequest") boolean ajaxRequest,
                                Model model, RedirectAttributes redirectAttrs) {
@@ -99,7 +99,7 @@ public class ObjectClassFormController {
             return null;
         }
 
-        ArrayList<ObjectClass> objectClasses = objectClassListType.getObjectClasses();
+        ArrayList<ObjectClass> objectClasses = objectClassesType.getObjectClasses();
 
         try {
             objectClassDataValidator.checkData(objectClasses);
@@ -117,7 +117,7 @@ public class ObjectClassFormController {
 
         s.setSubmitDate(cal.getTime());
         s.setmocrid(Integer.parseInt(mocrid));
-        s.setObjectClassListType(objectClassListType);
+        s.setObjectClassesType(objectClassesType);
         s.setStatus(StatusType.ongoing);
         s.setUserinfo(userinfo);
 

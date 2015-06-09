@@ -3,8 +3,6 @@ package com.spring.mvc.mini.web;
 import java.util.ArrayList;
 
 import javax.mail.Address;
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 import com.spring.mvc.mini.pojo.RequestStatus;
@@ -68,7 +66,7 @@ public class RequestStatusController {
 						 @ModelAttribute("ajaxRequest") boolean ajaxRequest,
 						 Model model, RedirectAttributes redirectAttrs) {
 		
-		if(miniequeststatus.getObjectClassListType() == null){
+		if(miniequeststatus.getObjectClassesType() == null){
 			ArrayList<RequestStatus> mrsList = requestStatusJsonParser.readStatus();
 			
 			if (isMocridEquals(miniequeststatus, model, mrsList)){
@@ -91,7 +89,7 @@ public class RequestStatusController {
 		}
 		
 		requestStatuses.get(index).setComments(miniequeststatus.getComments());
-		requestStatuses.get(index).setObjectClassListType(miniequeststatus.getObjectClassListType());
+		requestStatuses.get(index).setObjectClassesType(miniequeststatus.getObjectClassesType());
 		
 		RequestStatusListType type = new RequestStatusListType();
 		
@@ -123,9 +121,9 @@ public class RequestStatusController {
 		textsb.append(miniequeststatus.getComments());
 		textsb.append(" \r\n");
 
-		if(!requestStatuses.get(index).getObjectClassListType().equals(miniequeststatus.getObjectClassListType())){
+		if(!requestStatuses.get(index).getObjectClassesType().equals(miniequeststatus.getObjectClassesType())){
 			textsb.append("Object Classes updated: \r\n");
-			textsb.append(miniequeststatus.getObjectClassListType().toString());
+			textsb.append(miniequeststatus.getObjectClassesType().toString());
 		}
 
 		textsb.append("http://localhost:8080/spring-mvc-mini/requeststatus?mocrid=");

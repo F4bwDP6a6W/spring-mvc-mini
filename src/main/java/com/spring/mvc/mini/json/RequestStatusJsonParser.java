@@ -27,7 +27,7 @@ public class RequestStatusJsonParser {
 
         ArrayList<RequestStatus> list = this.readStatus();
 
-        ArrayList<ObjectClass> objectClasses = list.get(list.size() - 1).getObjectClassListType().getObjectClasses();
+        ArrayList<ObjectClass> objectClasses = list.get(list.size() - 1).getObjectClassesType().getObjectClasses();
 
         return objectClasses.get(objectClasses.size() - 1).getIntclass();
     }

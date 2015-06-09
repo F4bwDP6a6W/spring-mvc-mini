@@ -2,7 +2,7 @@ package com.spring.mvc.mini.pojo;
 
 import java.util.ArrayList;
 
-public class ObjectClassListType {
+public class ObjectClassesType {
 
     ArrayList<ObjectClass> objectClasses;
 
@@ -20,6 +20,6 @@ public class ObjectClassListType {
         for (ObjectClass item : objectClasses) {
             sb.append(item);
         }
-        return "ObjectClassListType [objectClasses=" + sb + "]";
+        return "ObjectClassesType [objectClasses=" + sb + "]";
     }
 }

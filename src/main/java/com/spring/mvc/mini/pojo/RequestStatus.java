@@ -8,7 +8,7 @@ public class RequestStatus {
     Date submitDate;
     Date commitDate;
     Date holdDate;
-    ObjectClassListType objectClassListType;
+    ObjectClassesType objectClassesType;
     UserInfo userinfo;
     StatusType status;
     String comments;
@@ -53,12 +53,12 @@ public class RequestStatus {
         this.status = status;
     }
 
-    public ObjectClassListType getObjectClassListType() {
-        return objectClassListType;
+    public ObjectClassesType getObjectClassesType() {
+        return objectClassesType;
     }
 
-    public void setObjectClassListType(ObjectClassListType objectClassListType) {
-        this.objectClassListType = objectClassListType;
+    public void setObjectClassesType(ObjectClassesType objectClassesType) {
+        this.objectClassesType = objectClassesType;
     }
 
     public int getmocrid() {
@@ -81,7 +81,7 @@ public class RequestStatus {
     public String toString() {
         return "RequestStatus [id=" + id + ", submitDate="
                 + submitDate + ", commitDate=" + commitDate + ", holdDate="
-                + holdDate + ", enrichObjectClassListType=" + objectClassListType
+                + holdDate + ", enrichObjectClassListType=" + objectClassesType
                 + ", userinfo=" + userinfo + ", status=" + status
                 + ", comments=" + comments + "]";
     }
