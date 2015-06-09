@@ -26,12 +26,12 @@ Spring-mvc-mini是一个轻量的项目，基于Spring MVC.
 
 如果你想要学习或贡献和这个项目：
 
-就通过maven把它build成一个Eclipse项目，执行以下命令，打开CMD：
+就通过maven把它build成一个IDE项目，执行以下命令，打开CMD：
 
     $ cd spring-mvc-mini
-    $ mvn eclipse:eclipse
+    $ mvn eclipse:eclipse or mvn idea:idea
 
-通过Eclipse导入即可。
+通过Eclipse或IDEA导入即可。
 
 
 Note:
