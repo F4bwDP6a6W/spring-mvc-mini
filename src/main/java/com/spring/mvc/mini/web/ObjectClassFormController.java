@@ -35,19 +35,19 @@ import com.spring.mvc.mini.validation.ObjectClassDataValidator;
 @SessionAttributes({"ojbclslisttype", "userinfo", "mocrid"})
 public class ObjectClassFormController {
 
-    static Logger LOG = LoggerFactory.getLogger(ObjectClassFormController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ObjectClassFormController.class);
 
     @Autowired
-    RequestStatusJsonParser requestStatusJsonParser;
+    private RequestStatusJsonParser requestStatusJsonParser;
 
     @Autowired
-    ObjectClassDataValidator objectClassDataValidator;
+    private ObjectClassDataValidator objectClassDataValidator;
 
     @Autowired
-    Properties properties;
+    private Properties properties;
 
     @Autowired
-    MailSender mailSender;
+    private MailSender mailSender;
 
     @ModelAttribute
     public void ajaxAttribute(WebRequest request, Model model) {
@@ -139,7 +139,7 @@ public class ObjectClassFormController {
         String message = "MO CR:" + mocrid + " committed. System will send mail to reviewers.";
 
         if (ajaxRequest) {
-            model.addAttribute("message", message.toString());
+            model.addAttribute("message", message);
             return null;
         } else {
             redirectAttrs.addFlashAttribute("message", message);

@@ -25,10 +25,10 @@ import com.spring.mvc.mini.xml.ObjectClassXMLPaser;
 @SessionAttributes("productList")
 public class ObjectClassesController {
 
-    static Logger LOG = LoggerFactory.getLogger(ObjectClassesController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ObjectClassesController.class);
 
     @Autowired
-    ObjectClassXMLPaser objectClassXMLPaser;
+    private ObjectClassXMLPaser objectClassXMLPaser;
 
     @ModelAttribute
     public void ajaxAttribute(WebRequest request, Model model) {
@@ -42,7 +42,7 @@ public class ObjectClassesController {
         ArrayList<ObjectClass> ojbclslist = getObjectClasses();
 
         Collections.reverse(ojbclslist);
-        PagedListHolder<ArrayList<ObjectClass>> productList = new PagedListHolder(ojbclslist);
+        PagedListHolder productList = new PagedListHolder(ojbclslist);
         productList.setPageSize(100);
 
         model.addAttribute("productList", productList);
@@ -64,9 +64,7 @@ public class ObjectClassesController {
     public String handleObjectClassPagination(Model model, @ModelAttribute("jumppage") String jumppage, @ModelAttribute("productList") PagedListHolder<ArrayList<ObjectClass>> productList) {
 
         LOG.info("@RequestMapping(params={\"jumppage\"}, method = RequestMethod.GET)");
-        if (jumppage == null) {
-
-        } else {
+        if (jumppage != null) {
 
             if ("next".equals(jumppage)) {
                 productList.nextPage();
@@ -86,9 +84,7 @@ public class ObjectClassesController {
 
         LOG.info("@RequestMapping(params={\"searchcritical\"}, method = RequestMethod.GET)");
         ArrayList<ObjectClass> searchOjbclslist = null;
-        if (searchcritical == null) {
-
-        } else {
+        if (searchcritical != null) {
 
             ArrayList<ObjectClass> ojbclslist = getObjectClasses();
 
@@ -126,7 +122,7 @@ public class ObjectClassesController {
         }
     }
 
-    public int isInteger(String s) {
+    private int isInteger(String s) {
         int i;
         try {
             i = Integer.parseInt(s);

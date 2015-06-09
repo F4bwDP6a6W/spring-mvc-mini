@@ -26,7 +26,7 @@ public class ObjectClassXmlController {
 	static Logger LOG = LoggerFactory.getLogger(ObjectClassXmlController.class);
 	
 	@Autowired
-	ObjectClassXMLPaser objectClassXMLPaser;
+	private ObjectClassXMLPaser objectClassXMLPaser;
 	
 	@ModelAttribute
 	public void ajaxAttribute(WebRequest request, Model model) {

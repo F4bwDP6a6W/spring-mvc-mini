@@ -6,11 +6,11 @@ import com.spring.mvc.mini.password.PasswordJasypter;
 
 public class UserInfo {
     @NotNull
-    String username;
+    private String username;
     @NotNull
-    String email;
+    private String email;
     @NotNull
-    String password;
+    private String password;
 
     public String getUsername() {
         return username;

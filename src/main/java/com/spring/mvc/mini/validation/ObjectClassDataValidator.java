@@ -14,7 +14,7 @@ public class ObjectClassDataValidator {
 	@Autowired
 	private ObjectClassXMLPaser ocxp; 
 	
-	public void checkData(ArrayList<ObjectClass> objclsListFormIn) throws ObjectClassDataValidationException,Exception{
+	public void checkData(ArrayList<ObjectClass> objclsListFormIn) throws Exception{
 		
 		ArrayList<ObjectClass> objclsListXmlIn = ocxp.objectClassMapping();
 		
@@ -52,7 +52,7 @@ public class ObjectClassDataValidator {
 		
 	}
 	
-	public void checkmocrid(String mocrid,int latestmocrid) throws ObjectClassDataValidationException,Exception{
+	public void checkmocrid(String mocrid,int latestmocrid) throws Exception{
 		if (Integer.parseInt(mocrid) <= latestmocrid ){
 			throw new ObjectClassDataValidationException("FAILED:MO CR ID:\""+mocrid+"\" is not valid anymore, please refresh and recommit again.");
 		}

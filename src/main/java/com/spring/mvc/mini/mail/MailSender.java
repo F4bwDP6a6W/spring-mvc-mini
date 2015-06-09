@@ -20,8 +20,8 @@ import com.spring.mvc.mini.properties.Properties;
 
 @Component
 public class MailSender {
-	
-	static Logger LOG = LoggerFactory.getLogger(MailSender.class);
+
+    private static final Logger LOG = LoggerFactory.getLogger(MailSender.class);
 
     @Autowired
     private Properties properties;
@@ -41,7 +41,7 @@ public class MailSender {
             message.setRecipients(Message.RecipientType.TO, toAddress);
             Transport.send(message);
             
-            LOG.info("Send Mail Done: " + fromAddress + " to" + toAddress);
+            LOG.info("Send Mail Done: " + fromAddress + " to" + toAddress.toString());
 
     }
 

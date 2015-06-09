@@ -26,14 +26,14 @@ import com.spring.mvc.mini.properties.Properties;
 @Component
 public class SVNHandler {
 
-    static Logger LOG = LoggerFactory.getLogger(SVNHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SVNHandler.class);
 
     @Autowired
     private Properties properties;
 
     public void svnCheckin() {
 
-        SVNRepository repository = null;
+        SVNRepository repository;
 
         SVNClientManager ourClientManager = SVNClientManager.newInstance();
 
@@ -91,7 +91,7 @@ public class SVNHandler {
             return;
         }
 
-        SVNRepository repository = null;
+        SVNRepository repository;
 
         try {
             //initiate the reporitory from the url

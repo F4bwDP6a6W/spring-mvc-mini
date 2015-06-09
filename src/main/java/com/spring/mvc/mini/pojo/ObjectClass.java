@@ -12,21 +12,21 @@ public class ObjectClass implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull
-    String id;
+    private String id;
 
     @NotNull
-    int intclass;
+    private int intclass;
 
     @NotNull
-    String abbreviation;
+    private String abbreviation;
     @NotNull
-    String packageName;
+    private String packageName;
     @NotNull
-    String name;
+    private String name;
     @NotNull
-    String parents;
+    private String parents;
 
-    String comment;
+    private String comment;
 
     public String getId() {
         return id;
@@ -114,9 +114,6 @@ public class ObjectClass implements Serializable {
         if (this.parents.contains(searchcritical)) {
             return true;
         }
-        if (String.valueOf(this.intclass).contains(searchcritical)) {
-            return true;
-        }
-        return false;
+        return String.valueOf(this.intclass).contains(searchcritical);
     }
 }

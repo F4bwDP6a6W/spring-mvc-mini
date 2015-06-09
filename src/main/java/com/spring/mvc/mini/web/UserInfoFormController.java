@@ -25,7 +25,7 @@ import com.spring.mvc.mini.pojo.UserInfo;
 public class UserInfoFormController {
 	
 	@Autowired
-	MailSender ms;
+	private MailSender ms;
 	
 	@ModelAttribute
 	public void ajaxAttribute(WebRequest request, Model model) {
@@ -67,8 +67,8 @@ public class UserInfoFormController {
 			return "redirect:/";			
 		}
 	}
-	
-	public void loginAndSendMail(UserInfo userinfo) throws Exception{
+
+	private void loginAndSendMail(UserInfo userinfo) throws Exception{
 		
 		String subject = "Login successfully to mvc mini";
 		String text="Welcome you,"+userinfo.getUsername()+"!\r\nYou can reserve the object classes now.";

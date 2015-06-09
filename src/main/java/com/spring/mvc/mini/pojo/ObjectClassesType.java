@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ObjectClassesType {
 
-    ArrayList<ObjectClass> objectClasses;
+    private ArrayList<ObjectClass> objectClasses;
 
     public ArrayList<ObjectClass> getObjectClasses() {
         return objectClasses;

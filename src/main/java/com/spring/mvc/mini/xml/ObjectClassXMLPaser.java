@@ -30,7 +30,7 @@ import com.spring.mvc.mini.svn.SVNHandler;
 @Component
 public class ObjectClassXMLPaser {
 
-    static Logger LOGGER = LoggerFactory.getLogger(ObjectClassXMLPaser.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ObjectClassXMLPaser.class);
 
     @Autowired
     private Properties properties;
@@ -88,15 +88,12 @@ public class ObjectClassXMLPaser {
     }
 
     private void setElementToObject(ObjectClass objectClass, Element node) {
-        objectClass.setId(node.getAttribute("id").toString());
-        objectClass.setAbbreviation(node.getAttribute("abbrev")
-                .toString());
+        objectClass.setId(node.getAttribute("id"));
+        objectClass.setAbbreviation(node.getAttribute("abbrev"));
         objectClass.setIntclass(Integer.parseInt(node.getAttribute("intclass")));
-        objectClass.setName(node.getAttribute("name").toString());
-        objectClass.setParents(node.getAttribute("parents")
-                .toString());
-        objectClass.setPackageName(node.getAttribute("adaID")
-                .toString());
+        objectClass.setName(node.getAttribute("name"));
+        objectClass.setParents(node.getAttribute("parents"));
+        objectClass.setPackageName(node.getAttribute("adaID"));
     }
 
     public void AddObjectClass(ObjectClass objectClass) {

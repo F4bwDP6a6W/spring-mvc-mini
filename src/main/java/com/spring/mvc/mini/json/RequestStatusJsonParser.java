@@ -18,7 +18,7 @@ import com.spring.mvc.mini.properties.Properties;
 @Component
 public class RequestStatusJsonParser {
 
-    static Logger LOG = LoggerFactory.getLogger(RequestStatusJsonParser.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RequestStatusJsonParser.class);
 
     @Autowired
     private Properties properties;

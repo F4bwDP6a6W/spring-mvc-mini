@@ -18,7 +18,7 @@ import java.util.Date;
 public class RequestStatusJsonParserTest1 {
 
     @Resource
-    RequestStatusJsonParser requestStatusJsonParser;
+    private RequestStatusJsonParser requestStatusJsonParser;
 
     @Test
     public void test_writeStatus(){

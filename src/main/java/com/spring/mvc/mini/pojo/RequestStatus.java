@@ -4,14 +4,14 @@ import java.util.Date;
 
 public class RequestStatus {
 
-    int id;
-    Date submitDate;
-    Date commitDate;
-    Date holdDate;
-    ObjectClassesType objectClassesType;
-    UserInfo userinfo;
-    StatusType status;
-    String comments;
+    private int id;
+    private  Date submitDate;
+    private Date commitDate;
+    private Date holdDate;
+    private ObjectClassesType objectClassesType;
+    private UserInfo userinfo;
+    private StatusType status;
+    private String comments;
 
     public Date getSubmitDate() {
         return submitDate;

@@ -27,14 +27,14 @@ import com.spring.mvc.mini.pojo.UserInfo;
 @Controller
 @RequestMapping("/requeststatus")
 public class RequestStatusController {
-	
-	static Logger LOGGER = LoggerFactory.getLogger(RequestStatusController.class);
-	
-	@Autowired
-	RequestStatusJsonParser requestStatusJsonParser;
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(RequestStatusController.class);
 	
 	@Autowired
-	MailSender ms;
+	private RequestStatusJsonParser requestStatusJsonParser;
+	
+	@Autowired
+	private MailSender ms;
 	
 	@ModelAttribute
 	public void ajaxAttribute(WebRequest request, Model model) {

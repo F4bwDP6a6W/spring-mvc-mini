@@ -3,8 +3,8 @@ package com.spring.mvc.mini.pojo;
 import java.util.ArrayList;
 
 public class RequestStatusListType {
-	
-	ArrayList<RequestStatus> requestStatuses;
+
+	private ArrayList<RequestStatus> requestStatuses;
 
 	public ArrayList<RequestStatus> getRequestStatuses() {
 		return requestStatuses;

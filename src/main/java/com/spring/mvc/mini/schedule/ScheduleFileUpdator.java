@@ -25,19 +25,19 @@ import com.spring.mvc.mini.xml.ObjectClassXMLPaser;
 
 public class ScheduleFileUpdator {
 
-    static Logger LOG = LoggerFactory.getLogger(ScheduleFileUpdator.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ScheduleFileUpdator.class);
 
     @Autowired
-    RequestStatusJsonParser jsonParser;
+    private RequestStatusJsonParser jsonParser;
 
     @Autowired
-    SVNHandler svnHandler;
+    private SVNHandler svnHandler;
 
     @Autowired
-    ObjectClassXMLPaser objectClassXMLPaser;
+    private ObjectClassXMLPaser objectClassXMLPaser;
 
     @Autowired
-    MailSender mailSender;
+    private MailSender mailSender;
 
     public void commitObjectClassXml() {
         Calendar calendar = Calendar.getInstance();
@@ -47,7 +47,6 @@ public class ScheduleFileUpdator {
 
         ArrayList<RequestStatus> requestStatuses = jsonParser.readStatus();
 
-        int requestStatusIndex = 0;
         for (RequestStatus status : requestStatuses) {
 
             int daysBetweenSubmitAndCurrent = Days.daysBetween(new DateTime(status.getSubmitDate()), new DateTime(currentTime)).getDays();
