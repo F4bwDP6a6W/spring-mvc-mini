@@ -29,8 +29,8 @@
 						<tr>
 							<td>${ObjectClass.id}</td>
 	                        <td>${ObjectClass.intclass}</td>
-	                        <td>${ObjectClass.abbrev}</td>
-	                        <td>${ObjectClass.adaID}</td>
+	                        <td>${ObjectClass.abbreviation}</td>
+	                        <td>${ObjectClass.packageName}</td>
 	                        <td>${ObjectClass.name}</td>
 	                        <td>${ObjectClass.parents}</td>
 	                        <td>${ObjectClass.comment}</td>

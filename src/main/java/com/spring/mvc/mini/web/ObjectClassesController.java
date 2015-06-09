@@ -21,11 +21,11 @@ import com.spring.mvc.mini.pojo.ObjectClass;
 import com.spring.mvc.mini.xml.ObjectClassXMLPaser;
 
 @Controller
-@RequestMapping("/objectclasslist")
+@RequestMapping("/objectClasses")
 @SessionAttributes("productList")
-public class ObjectClassListController {
+public class ObjectClassesController {
 
-    static Logger LOG = LoggerFactory.getLogger(ObjectClassListController.class);
+    static Logger LOG = LoggerFactory.getLogger(ObjectClassesController.class);
 
     @Autowired
     ObjectClassXMLPaser objectClassXMLPaser;
@@ -37,7 +37,7 @@ public class ObjectClassListController {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public String enrichObjectClassListType(Model model, @ModelAttribute("page") String page) {
+    public String enrichobjectClassesType(Model model, @ModelAttribute("page") String page) {
 
         ArrayList<ObjectClass> ojbclslist = getObjectClasses();
 
@@ -122,7 +122,7 @@ public class ObjectClassListController {
         } else {
 
             redirectAttrs.addFlashAttribute("message", message);
-            return "redirect:/objectclasslist";
+            return "redirect:/objectClasses";
         }
     }
 
