@@ -34,7 +34,7 @@ public class RequestStatusController {
 	private RequestStatusJsonParser requestStatusJsonParser;
 	
 	@Autowired
-	private MailSender ms;
+	private MailSender mailSender;
 	
 	@ModelAttribute
 	public void ajaxAttribute(WebRequest request, Model model) {
@@ -158,7 +158,7 @@ public class RequestStatusController {
 		
 		Address[] toAddress = {new InternetAddress(userinfo.getEmail())};
 		
-		ms.sendMail(userinfo.getUsername(), userinfo.getPassword(), userinfo.getEmail(),toAddress, subject, text);
+		mailSender.sendMail(userinfo.getUsername(), userinfo.getPassword(), userinfo.getEmail(), toAddress, subject, text);
 	}
 
 }

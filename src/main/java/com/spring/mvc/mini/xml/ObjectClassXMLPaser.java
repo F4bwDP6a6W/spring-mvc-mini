@@ -1,10 +1,13 @@
 package com.spring.mvc.mini.xml;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
+import com.spring.mvc.mini.pojo.ObjectClass;
+import com.spring.mvc.mini.svn.SVNHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.w3c.dom.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -12,28 +15,19 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.w3c.dom.Comment;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import com.spring.mvc.mini.pojo.ObjectClass;
-import com.spring.mvc.mini.properties.Properties;
-import com.spring.mvc.mini.svn.SVNHandler;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 
 @Component
 public class ObjectClassXMLPaser {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ObjectClassXMLPaser.class);
 
-    @Autowired
-    private Properties properties;
+    @Value("${path.xml}")
+    private String xmlPath;
 
     @Autowired
     private SVNHandler svnHandler;
@@ -46,7 +40,7 @@ public class ObjectClassXMLPaser {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
 
-        File objectClassesFile = new File(properties.getXmlPath());
+        File objectClassesFile = new File(xmlPath);
 
         Document document = builder.parse(objectClassesFile);
 
@@ -104,7 +98,7 @@ public class ObjectClassXMLPaser {
 
             DocumentBuilder builder = factory.newDocumentBuilder();
 
-            File objectClassesFile = new File(properties.getXmlPath());
+            File objectClassesFile = new File(xmlPath);
 
             Document document = builder.parse(objectClassesFile);
 
@@ -117,7 +111,7 @@ public class ObjectClassXMLPaser {
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(document);
 
-            StreamResult result = new StreamResult(new File(properties.getXmlPath()));
+            StreamResult result = new StreamResult(new File(xmlPath));
 
             transformer.transform(source, result);
 
@@ -142,7 +136,7 @@ public class ObjectClassXMLPaser {
         LOGGER.info("Start to checkout");
         svnHandler.svnCheckout();
 
-        Path path = Paths.get(properties.getXmlPath());
+        Path path = Paths.get(xmlPath);
 
         return Files.readAllBytes(path);
 

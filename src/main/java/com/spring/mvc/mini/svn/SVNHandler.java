@@ -1,12 +1,8 @@
 package com.spring.mvc.mini.svn;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.util.Date;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.tmatesoft.svn.core.SVNDepth;
 import org.tmatesoft.svn.core.SVNException;
@@ -14,22 +10,35 @@ import org.tmatesoft.svn.core.SVNURL;
 import org.tmatesoft.svn.core.auth.ISVNAuthenticationManager;
 import org.tmatesoft.svn.core.io.SVNRepository;
 import org.tmatesoft.svn.core.io.SVNRepositoryFactory;
-import org.tmatesoft.svn.core.wc.SVNClientManager;
-import org.tmatesoft.svn.core.wc.SVNCommitClient;
-import org.tmatesoft.svn.core.wc.SVNDiffClient;
-import org.tmatesoft.svn.core.wc.SVNRevision;
-import org.tmatesoft.svn.core.wc.SVNUpdateClient;
-import org.tmatesoft.svn.core.wc.SVNWCUtil;
+import org.tmatesoft.svn.core.wc.*;
 
-import com.spring.mvc.mini.properties.Properties;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.Date;
+
 
 @Component
 public class SVNHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(SVNHandler.class);
 
-    @Autowired
-    private Properties properties;
+    @Value("${svn.rep.url}")
+    private String repURL;
+
+    @Value("${path.rep}")
+    private String repPath;
+
+    @Value("${svn.username}")
+    private String username;
+
+    @Value("${svn.password}")
+    private String password;
+
+    @Value("${path.json}")
+    private String jsonPath;
+
+    @Value("${path.xml}")
+    private String xmlPath;
 
     public void svnCheckin() {
 
@@ -38,10 +47,10 @@ public class SVNHandler {
         SVNClientManager ourClientManager = SVNClientManager.newInstance();
 
         try {
-            repository = SVNRepositoryFactory.create(SVNURL.parseURIDecoded(properties.getRepURL()));
+            repository = SVNRepositoryFactory.create(SVNURL.parseURIDecoded(repURL));
 
             ISVNAuthenticationManager authManager =
-                    SVNWCUtil.createDefaultAuthenticationManager(properties.getUsername(), properties.getPassword());
+                    SVNWCUtil.createDefaultAuthenticationManager(username, password);
             repository.setAuthenticationManager(authManager);
 
             LOG.info("Repository Root: " + repository.getRepositoryRoot(true));
@@ -54,8 +63,8 @@ public class SVNHandler {
             SVNCommitClient commitClient = ourClientManager.getCommitClient();
             SVNDiffClient diffClient = ourClientManager.getDiffClient();
 
-            File xmlfile = new File(properties.getXmlPath());
-            File jsonfile = new File(properties.getJsonPath());
+            File xmlfile = new File(xmlPath);
+            File jsonfile = new File(jsonPath);
             File[] xmlfilearray = {xmlfile};
             File[] jsonfilearray = {jsonfile};
 
@@ -86,7 +95,7 @@ public class SVNHandler {
 
     public void svnCheckout() {
 
-        File svnTempDir = new File(properties.getRepPath());
+        File svnTempDir = new File(repPath);
         if (svnTempDir.exists()) {
             return;
         }
@@ -95,11 +104,11 @@ public class SVNHandler {
 
         try {
             //initiate the reporitory from the url
-            repository = SVNRepositoryFactory.create(SVNURL.parseURIDecoded(properties.getRepURL()));
+            repository = SVNRepositoryFactory.create(SVNURL.parseURIDecoded(repURL));
 
             //create authentication data
             ISVNAuthenticationManager authManager =
-                    SVNWCUtil.createDefaultAuthenticationManager(properties.getUsername(), properties.getPassword());
+                    SVNWCUtil.createDefaultAuthenticationManager(username, password);
             repository.setAuthenticationManager(authManager);
 
             //need to identify latest revision

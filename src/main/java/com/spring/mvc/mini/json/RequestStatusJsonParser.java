@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,8 +21,8 @@ public class RequestStatusJsonParser {
 
     private static final Logger LOG = LoggerFactory.getLogger(RequestStatusJsonParser.class);
 
-    @Autowired
-    private Properties properties;
+    @Value("${path.json}")
+    private String jsonPath;
 
     public int getMaxIntClass() {
 
@@ -43,7 +44,7 @@ public class RequestStatusJsonParser {
     public void writeStatus(RequestStatusListType mrslt) {
 
         try {
-            new ObjectMapper().writeValue(new File(properties.getJsonPath()), mrslt);
+            new ObjectMapper().writeValue(new File(jsonPath), mrslt);
         } catch (IOException e) {
             LOG.error(e.toString());
         }
@@ -55,7 +56,7 @@ public class RequestStatusJsonParser {
         RequestStatusListType type = null;
 
         try {
-            type = new ObjectMapper().readValue(new File(properties.getJsonPath()), RequestStatusListType.class);
+            type = new ObjectMapper().readValue(new File(jsonPath), RequestStatusListType.class);
 
             LOG.debug(type.toString());
 

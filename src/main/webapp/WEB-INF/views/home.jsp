@@ -23,10 +23,10 @@
         <li><a href="<c:url value="/userinfoform" />" title="userinfoform">UserInfoForm</a></li>
         <li><a href="<c:url value="/objectclassform" />" title="objectclassform">ObjectClassForm</a></li>
         <li><a href="<c:url value="/requeststatus" />" title="requeststatus">RequestStatusForm</a></li>
-        <li><a href="<c:url value="/objectclasslist" />" title="objectclasslist">ObjectClassList</a></li>
+        <li><a href="<c:url value="/objectClasses" />" title="objectClasses">ObjectClassList</a></li>
     </ul>
 </div>	
-<p>© 2015 spring. Tech:<a href="http://spring.io/guides">Spring MVC</a>. Support Contact <a href="mailto:jerry.1.zhang@spring.com">Jerry Zhang</a></p>
+<p>? 2015 spring. Tech:<a href="http://spring.io/guides">Spring MVC</a>. Support Contact <a href="mailto:jerry.1.zhang@spring.com">Jerry Zhang</a></p>
 <script type="text/javascript" src="<c:url value="/resources/jquery/1.6/jquery.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/jqueryform/2.8/jquery.form.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/jqueryui/1.8/jquery.ui.core.js" />"></script>
@@ -78,9 +78,9 @@ $(document).ready(function() {
 
 	$("#tabs").bind("tabsselect", function(event, ui) { 
 		
-		if("objectclasslist" == ui.tab.title){
+		if("objectClasses" == ui.tab.title){
 			console.log("iftrue");
-			window.location.replace("./objectclasslist");
+			window.location.replace("./objectClasses");
 			return;
 		}
 		

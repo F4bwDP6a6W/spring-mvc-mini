@@ -13,6 +13,7 @@ import com.spring.mvc.mini.pojo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mvc.extensions.ajax.AjaxUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +28,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.spring.mvc.mini.json.RequestStatusJsonParser;
 import com.spring.mvc.mini.mail.MailSender;
 import com.spring.mvc.mini.pojo.RequestStatus;
-import com.spring.mvc.mini.properties.Properties;
 import com.spring.mvc.mini.validation.ObjectClassDataValidator;
 
 @Controller
@@ -37,14 +37,17 @@ public class ObjectClassFormController {
 
     private static final Logger LOG = LoggerFactory.getLogger(ObjectClassFormController.class);
 
+    @Value("${mail.to}")
+    private String mailto;
+
+    @Value("${web.hostname}")
+    private String webHostname;
+
     @Autowired
     private RequestStatusJsonParser requestStatusJsonParser;
 
     @Autowired
     private ObjectClassDataValidator objectClassDataValidator;
-
-    @Autowired
-    private Properties properties;
 
     @Autowired
     private MailSender mailSender;
@@ -151,7 +154,7 @@ public class ObjectClassFormController {
         StringBuffer textsb = new StringBuffer();
         textsb.append("Hi,\r\n\r\nThese MO CR's shall be approved if no other comments.\r\nIf you have any comment, please comment on this page:\r\n");
         textsb.append("http://");
-        textsb.append(properties.getWebHostname());
+        textsb.append(webHostname);
         textsb.append(":8080/spring-mvc-mini/requeststatus?mocrid=");
         textsb.append(mocrid);
         textsb.append("\r\nor mailto:");
@@ -159,7 +162,7 @@ public class ObjectClassFormController {
         textsb.append("\r\n");
         textsb.append("The request will be committed in 5 days.\r\n\r\nThanks.\r\n");
         textsb.append("http://");
-        textsb.append(properties.getWebHostname());
+        textsb.append(webHostname);
         textsb.append(":8080/spring-mvc-mini/");
         return textsb.toString();
     }
@@ -198,7 +201,7 @@ public class ObjectClassFormController {
 
     public void commitAndSendMail(UserInfo userinfo, String subject, String text) throws Exception {
 
-        Address[] toAddress = {new InternetAddress(properties.getMailto()), new InternetAddress(userinfo.getEmail())};
+        Address[] toAddress = {new InternetAddress(mailto), new InternetAddress(userinfo.getEmail())};
 
         mailSender.sendMail(userinfo.getUsername(), userinfo.getPassword(), userinfo.getEmail(), toAddress, subject, text);
     }

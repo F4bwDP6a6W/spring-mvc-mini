@@ -12,11 +12,11 @@ import com.spring.mvc.mini.xml.ObjectClassXMLPaser;
 public class ObjectClassDataValidator {
 
 	@Autowired
-	private ObjectClassXMLPaser ocxp; 
+	private ObjectClassXMLPaser objectClassXMLPaser;
 	
 	public void checkData(ArrayList<ObjectClass> objclsListFormIn) throws Exception{
 		
-		ArrayList<ObjectClass> objclsListXmlIn = ocxp.objectClassMapping();
+		ArrayList<ObjectClass> objclsListXmlIn = objectClassXMLPaser.objectClassMapping();
 		
 		for (ObjectClass objclsItemFormIn:objclsListFormIn){
 			
