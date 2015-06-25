@@ -1,4 +1,5 @@
 Spring-mvc-mini是一个完整的，轻量、简单的Java项目，基于Spring MVC.
+里面有基本的增删改查的功能。而且无需修改任何内容，就可以直接跑起来。
 下面是Spring MVC的Guide页面，这个项目很多是基于它编写的。
  
 http://spring.io/guides
