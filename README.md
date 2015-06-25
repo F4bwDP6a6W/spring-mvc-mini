@@ -1,5 +1,4 @@
-Spring-mvc-mini是一个轻量的Java项目，基于Spring MVC.
-
+Spring-mvc-mini是一个完整的，轻量、简单的Java项目，基于Spring MVC.
 下面是Spring MVC的Guide页面，这个项目很多是基于它编写的。
  
 http://spring.io/guides
