@@ -7,3 +7,6 @@ target
 src/main/webapp/META-INF
 .idea
 *.iml
+*.log
+*.ipr
+*.iws
