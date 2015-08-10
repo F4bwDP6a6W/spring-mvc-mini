@@ -196,6 +196,17 @@
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit</artifactId>
+			<version>4.0.1.201506240215-r</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit.archive</artifactId>
+			<version>4.0.1.201506240215-r</version>
+		</dependency>
 	</dependencies>
 	<repositories>
 		<!-- For testing against latest Spring snapshots -->

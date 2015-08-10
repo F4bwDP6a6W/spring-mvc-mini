@@ -8,6 +8,7 @@ http://spring.io/guides
 在这个项目里主要实现了以下技术：
 * spring-webmvc
 * svnkit
+* jgit
 * javax.mail
 * jasypt
 * dom4j
