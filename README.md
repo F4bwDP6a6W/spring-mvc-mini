@@ -1,8 +1,8 @@
  > 我叫Jerry, 本科毕业于2009年，而后开发和维护[Nokia NetAct](http://networks.nokia.com/portfolio/solutions/netact)系统至2016年7月。
- 
+
  > 我于2016年8月8日起开始在，USC 美国南加州大学攻读 计算机科学 硕士学位。
  
- > 我的[Linkedin账号](https://www.linkedin.com/in/hot13399).
+ > My Linkedin: (https://www.linkedin.com/in/hot13399).
  
 Spring-mvc-mini是一个完整的，轻量、简单的Java项目,适合于初学者学习Spring MVC.
 里面有基本的增删改查的功能。无需修改任何内容，就可以直接跑起来。
@@ -44,14 +44,12 @@ Note:
 
  如果你要在Linux环境运行，以下的文件需要修改。
 
-    $ spring-oss-mini\src\main\webapp\WEB-INF\spring\appServlet\servlet-context.xml:<context:property-placeholder 
-	$ location="file:/opt/web/spring-mvc-mini/resources/application.properties"/>
-	$ spring-oss-mini\src\main\resources\logback.xml
-	$ spring-oss-mini\resources\application.properties
+    $ spring-oss-mini\src\main\webapp\WEB-INF\spring\appServlet\servlet-context.xml:
+      <context:property-placeholder location="file:/opt/web/spring-mvc-mini/resources/application.properties"/>
+    $ spring-oss-mini\src\main\resources\logback.xml
+    $ spring-oss-mini\resources\application.properties
 
  最后通过Maven build一个war包部署即可。
-
-
 
 --------------------
 Spring-mvc-mini is a mini project using Spring MVC.
@@ -80,9 +78,9 @@ Import spring-mvc-mini as a Maven Project
 
 If you want to deploy this project to Linux server, you might need to edit conf files:
 
-    $ spring-oss-mini\src\main\webapp\WEB-INF\spring\appServlet\servlet-context.xml:<context:property-placeholder
-	$ location="file:/opt/web/spring-mvc-mini/resources/application.properties"/>
-	$ spring-oss-mini\src\main\resources\logback.xml
-	$ spring-oss-mini\resources\application.properties
+    $ spring-oss-mini\src\main\webapp\WEB-INF\spring\appServlet\servlet-context.xml:
+    	<context:property-placeholder location="file:/opt/web/spring-mvc-mini/resources/application.properties"/>
+    $ spring-oss-mini\src\main\resources\logback.xml
+    $ spring-oss-mini\resources\application.properties
 
 
