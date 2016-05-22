@@ -29,6 +29,8 @@ import com.spring.mvc.mini.pojo.UserInfo;
 public class RequestStatusController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(RequestStatusController.class);
+	private static final String REQUEST_STATUS = "requestStatus";
+	private static final String MESSAGE = "message";
 	
 	@Autowired
 	private RequestStatusJsonParser requestStatusJsonParser;
@@ -43,7 +45,7 @@ public class RequestStatusController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public void handleObjectClassForm(Model model) {
-		model.addAttribute("requestStatus", new RequestStatus());
+		model.addAttribute(REQUEST_STATUS, new RequestStatus());
 	}
 	
 	@RequestMapping(params={"mocrid"},method=RequestMethod.GET)
@@ -55,14 +57,14 @@ public class RequestStatusController {
 			
 			if(mrs.getmocrid() == Integer.parseInt(mocrid)){
 				LOGGER.debug("mrs.getmocrid() is:"+mrs.getmocrid());
-				model.addAttribute("requestStatus", mrs);
+				model.addAttribute(REQUEST_STATUS, mrs);
 			}
 		}
 		
 	}
 
 	@RequestMapping(method=RequestMethod.POST)
-	public String submit(@ModelAttribute("requestStatus") RequestStatus requestStatus,
+	public String submit(@ModelAttribute(REQUEST_STATUS) RequestStatus requestStatus,
 						 @ModelAttribute("ajaxRequest") boolean ajaxRequest,
 						 Model model, RedirectAttributes redirectAttrs) {
 		
@@ -70,11 +72,11 @@ public class RequestStatusController {
 			ArrayList<RequestStatus> mrsList = requestStatusJsonParser.readStatus();
 			
 			if (isMocridEquals(requestStatus, model, mrsList)){
-				model.addAttribute("message", "SUCCESS:MO CR ID:"+requestStatus.getmocrid()+" is presenting.");
+				model.addAttribute(MESSAGE, "SUCCESS:MO CR ID:"+requestStatus.getmocrid()+" is presenting.");
 				return null;
 			} else {
-				model.addAttribute("requestStatus", new RequestStatus());
-				model.addAttribute("message", "FAILED:MO CR ID:"+requestStatus.getmocrid()+" is not existing.");
+				model.addAttribute(REQUEST_STATUS, new RequestStatus());
+				model.addAttribute(MESSAGE, "FAILED:MO CR ID:"+requestStatus.getmocrid()+" is not existing.");
 			}
 		}
 		
@@ -101,21 +103,21 @@ public class RequestStatusController {
 		try {
 			this.commentAndSendMail(requestStatuses.get(index).getUserinfo(), constructMailSubject(requestStatus), constructMailText(requestStatus, requestStatuses, index));
 		} catch (Exception e) {
-			model.addAttribute("message", e.toString());
+			model.addAttribute(MESSAGE, e.toString());
 			return null;
 		}
 
 		String message = "Your update was submitted.";
 		
 		if (ajaxRequest) {
-			model.addAttribute("message", message);
+			model.addAttribute(MESSAGE, message);
 			return null;
 		} else {
 			return "redirect:/requeststatus";			
 		}
 	}
 
-	private String constructMailText(@ModelAttribute("requestStatus") RequestStatus requestStatus, ArrayList<RequestStatus> requestStatuses, int index) {
+	private String constructMailText(@ModelAttribute(REQUEST_STATUS) RequestStatus requestStatus, ArrayList<RequestStatus> requestStatuses, int index) {
 		StringBuffer textsb = new StringBuffer();
 		textsb.append("New Comments: \r\n");
 		textsb.append(requestStatus.getComments());
@@ -133,7 +135,7 @@ public class RequestStatusController {
 		return textsb.toString();
 	}
 
-	private String constructMailSubject(@ModelAttribute("requestStatus") RequestStatus requestStatus) {
+	private String constructMailSubject(@ModelAttribute(REQUEST_STATUS) RequestStatus requestStatus) {
 		StringBuffer subjectsb = new StringBuffer();
 		subjectsb.append("MO CR:");
 		subjectsb.append(requestStatus.getmocrid());
@@ -141,13 +143,13 @@ public class RequestStatusController {
 		return subjectsb.toString();
 	}
 
-	private boolean isMocridEquals(@ModelAttribute("requestStatus") RequestStatus requestStatus, Model model, ArrayList<RequestStatus> mrsList) {
+	private boolean isMocridEquals(@ModelAttribute(REQUEST_STATUS) RequestStatus requestStatus, Model model, ArrayList<RequestStatus> mrsList) {
 		boolean boo = false;
 		for(RequestStatus mrs:mrsList){
 
             if(mrs.getmocrid() == requestStatus.getmocrid()){
 
-                model.addAttribute("requestStatus", mrs);
+                model.addAttribute(REQUEST_STATUS, mrs);
                 boo = true;
             }
         }

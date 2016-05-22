@@ -36,6 +36,7 @@ import com.spring.mvc.mini.validation.ObjectClassDataValidator;
 public class ObjectClassFormController {
 
     private static final Logger LOG = LoggerFactory.getLogger(ObjectClassFormController.class);
+    private static final String MESSAGE = "message";
 
     @Value("${mail.to}")
     private String mailto;
@@ -98,7 +99,7 @@ public class ObjectClassFormController {
                                Model model, RedirectAttributes redirectAttrs) {
 
         if (userinfo.getUsername() == null) {
-            model.addAttribute("message", "Sorry, Please submit UserInfoForm at first. ");
+            model.addAttribute(MESSAGE, "Sorry, Please submit UserInfoForm at first. ");
             return null;
         }
 
@@ -109,7 +110,7 @@ public class ObjectClassFormController {
             objectClassDataValidator.checkmocrid(mocrid, requestStatusJsonParser.getLatestmocrid());
 
         } catch (Exception e) {
-            model.addAttribute("message", e.toString());
+            model.addAttribute(MESSAGE, e.toString());
             return null;
         }
 
@@ -135,17 +136,17 @@ public class ObjectClassFormController {
             this.commitAndSendMail(userinfo, constructMailSubject(mocrid, objectClasses), constructMailText(userinfo, mocrid));
         } catch (Exception e) {
 
-            model.addAttribute("message", e.toString());
+            model.addAttribute(MESSAGE, e.toString());
             return null;
         }
 
         String message = "MO CR:" + mocrid + " committed. System will send mail to reviewers.";
 
         if (ajaxRequest) {
-            model.addAttribute("message", message);
+            model.addAttribute(MESSAGE, message);
             return null;
         } else {
-            redirectAttrs.addFlashAttribute("message", message);
+            redirectAttrs.addFlashAttribute(MESSAGE, message);
             return "redirect:/objectclassform";
         }
     }

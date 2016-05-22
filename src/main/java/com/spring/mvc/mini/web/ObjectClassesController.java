@@ -26,6 +26,7 @@ import com.spring.mvc.mini.xml.ObjectClassXMLPaser;
 public class ObjectClassesController {
 
     private static final Logger LOG = LoggerFactory.getLogger(ObjectClassesController.class);
+    private static final String PRODUCT_LIST = "productList";
 
     @Autowired
     private ObjectClassXMLPaser objectClassXMLPaser;
@@ -45,7 +46,7 @@ public class ObjectClassesController {
         PagedListHolder productList = new PagedListHolder(ojbclslist);
         productList.setPageSize(100);
 
-        model.addAttribute("productList", productList);
+        model.addAttribute(PRODUCT_LIST, productList);
         return null;
     }
 
@@ -61,7 +62,7 @@ public class ObjectClassesController {
     }
 
     @RequestMapping(params = {"jumppage"}, method = RequestMethod.GET)
-    public String handleObjectClassPagination(Model model, @ModelAttribute("jumppage") String jumppage, @ModelAttribute("productList") PagedListHolder<ArrayList<ObjectClass>> productList) {
+    public String handleObjectClassPagination(Model model, @ModelAttribute("jumppage") String jumppage, @ModelAttribute(PRODUCT_LIST) PagedListHolder<ArrayList<ObjectClass>> productList) {
 
         LOG.info("@RequestMapping(params={\"jumppage\"}, method = RequestMethod.GET)");
         if (jumppage != null) {
@@ -75,7 +76,7 @@ public class ObjectClassesController {
             }
         }
 
-        model.addAttribute("productList", productList);
+        model.addAttribute(PRODUCT_LIST, productList);
         return null;
     }
 
@@ -99,13 +100,13 @@ public class ObjectClassesController {
         PagedListHolder<ArrayList<ObjectClass>> productList = new PagedListHolder(searchOjbclslist);
         productList.setPageSize(50);
 
-        model.addAttribute("productList", productList);
+        model.addAttribute(PRODUCT_LIST, productList);
         return null;
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public String submit(Model model, @ModelAttribute("page") String page,
-                         @ModelAttribute("productList") PagedListHolder<ArrayList<ObjectClass>> productList,
+                         @ModelAttribute(PRODUCT_LIST) PagedListHolder<ArrayList<ObjectClass>> productList,
                          @ModelAttribute("ajaxRequest") boolean ajaxRequest, RedirectAttributes redirectAttrs) {
 
         LOG.info("@RequestMapping(method=RequestMethod.POST)");
