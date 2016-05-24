@@ -23,7 +23,9 @@ import com.spring.mvc.mini.pojo.UserInfo;
 @RequestMapping("/userinfoform")
 @SessionAttributes("userinfo")
 public class UserInfoFormController {
-	
+
+	private static final String MESSAGE = "message";
+
 	@Autowired
 	private MailSender ms;
 	
@@ -49,7 +51,7 @@ public class UserInfoFormController {
 		try {
 			loginAndSendMail(userinfo);
 		} catch (Exception e) {
-			model.addAttribute("message", "Login Failed:"+e.toString());
+			model.addAttribute(MESSAGE, "Login Failed:"+e.toString());
 			return null;
 		}
 		
@@ -59,11 +61,11 @@ public class UserInfoFormController {
 
 		if (ajaxRequest) {
 
-			model.addAttribute("message", message);
+			model.addAttribute(MESSAGE, message);
 			return null;
 		} else {
 
-			redirectAttrs.addFlashAttribute("message", message);
+			redirectAttrs.addFlashAttribute(MESSAGE, message);
 			return "redirect:/";			
 		}
 	}
