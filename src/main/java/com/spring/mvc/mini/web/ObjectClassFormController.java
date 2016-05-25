@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.mail.Address;
 import javax.mail.internet.InternetAddress;
@@ -72,7 +73,7 @@ public class ObjectClassFormController {
     public void handleObjectClassForm(Model model, @ModelAttribute("userinfo") UserInfo userinfo, @ModelAttribute("mocrid") String mocrid) {
         ObjectClassesType objectClassesType = new ObjectClassesType();
 
-        ArrayList<ObjectClass> objectClasses = new ArrayList<ObjectClass>();
+        List<ObjectClass> objectClasses = new ArrayList<ObjectClass>();
         objectClasses.add(createObjectClassInstance(0, userinfo, mocrid));
 
         objectClassesType.setObjectClasses(objectClasses);
@@ -85,7 +86,7 @@ public class ObjectClassFormController {
     @RequestMapping(params = {"objclscount"}, method = RequestMethod.POST)
     public void handleObjectClassFormWithParam(@Valid ObjectClassesType objectClassesType, @ModelAttribute("userinfo") UserInfo userinfo, @ModelAttribute("mocrid") String mocrid, @RequestParam String ObjectClassCount, Model model) {
 
-        ArrayList<ObjectClass> objectClasses = objectClassesType.getObjectClasses();
+        List<ObjectClass> objectClasses = objectClassesType.getObjectClasses();
         objectClasses.add(createObjectClassInstance(Integer.parseInt(ObjectClassCount), userinfo, mocrid));
         objectClassesType.setObjectClasses(objectClasses);
         model.addAttribute("ObjectClassesType", objectClassesType);
@@ -103,7 +104,7 @@ public class ObjectClassFormController {
             return null;
         }
 
-        ArrayList<ObjectClass> objectClasses = objectClassesType.getObjectClasses();
+        List<ObjectClass> objectClasses = objectClassesType.getObjectClasses();
 
         try {
             objectClassDataValidator.checkData(objectClasses);
@@ -125,7 +126,7 @@ public class ObjectClassFormController {
         s.setStatus(StatusType.ongoing);
         s.setUserinfo(userinfo);
 
-        ArrayList<RequestStatus> l = requestStatusJsonParser.readStatus();
+        List<RequestStatus> l = requestStatusJsonParser.readStatus();
         l.add(s);
 
         RequestStatusListType type = new RequestStatusListType();
@@ -168,7 +169,7 @@ public class ObjectClassFormController {
         return textsb.toString();
     }
 
-    private String constructMailSubject(@ModelAttribute("mocrid") String mocrid, ArrayList<ObjectClass> objectClasses) {
+    private String constructMailSubject(@ModelAttribute("mocrid") String mocrid, List<ObjectClass> objectClasses) {
         StringBuffer subjectsb = new StringBuffer();
         subjectsb.append("Forthcoming approval of MO CR ");
         subjectsb.append(mocrid);
@@ -179,7 +180,7 @@ public class ObjectClassFormController {
         return subjectsb.toString();
     }
 
-    private void constructDebugMessage(ArrayList<ObjectClass> objectClasses) {
+    private void constructDebugMessage(List<ObjectClass> objectClasses) {
         StringBuffer debugmessage = new StringBuffer();
         for (ObjectClass objcls : objectClasses) {
             debugmessage.append(objcls);

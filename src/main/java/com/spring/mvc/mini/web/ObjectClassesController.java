@@ -2,6 +2,7 @@ package com.spring.mvc.mini.web;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +41,7 @@ public class ObjectClassesController {
     @RequestMapping(method = RequestMethod.GET)
     public String enrichobjectClassesType(Model model, @ModelAttribute("page") String page) {
 
-        ArrayList<ObjectClass> ojbclslist = getObjectClasses();
+        List<ObjectClass> ojbclslist = getObjectClasses();
 
         Collections.reverse(ojbclslist);
         PagedListHolder productList = new PagedListHolder(ojbclslist);
@@ -50,8 +51,8 @@ public class ObjectClassesController {
         return null;
     }
 
-    private ArrayList<ObjectClass> getObjectClasses() {
-        ArrayList<ObjectClass> ojbclslist = null;
+    private List<ObjectClass> getObjectClasses() {
+        List<ObjectClass> ojbclslist = null;
         try {
             ojbclslist = objectClassXMLPaser.objectClassMapping();
 
@@ -84,10 +85,10 @@ public class ObjectClassesController {
     public String searchObjectClass(Model model, @ModelAttribute("searchcritical") String searchcritical) {
 
         LOG.info("@RequestMapping(params={\"searchcritical\"}, method = RequestMethod.GET)");
-        ArrayList<ObjectClass> searchOjbclslist = null;
+        List<ObjectClass> searchOjbclslist = null;
         if (searchcritical != null) {
 
-            ArrayList<ObjectClass> ojbclslist = getObjectClasses();
+            List<ObjectClass> ojbclslist = getObjectClasses();
 
             searchOjbclslist = new ArrayList<ObjectClass>();
             for (ObjectClass ojbcls : ojbclslist) {

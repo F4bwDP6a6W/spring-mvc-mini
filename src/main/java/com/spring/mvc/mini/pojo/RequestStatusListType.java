@@ -1,16 +1,16 @@
 package com.spring.mvc.mini.pojo;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class RequestStatusListType {
 
-	private ArrayList<RequestStatus> requestStatuses;
+	private List<RequestStatus> requestStatuses;
 
-	public ArrayList<RequestStatus> getRequestStatuses() {
+	public List<RequestStatus> getRequestStatuses() {
 		return requestStatuses;
 	}
 
-	public void setRequestStatuses(ArrayList<RequestStatus> requestStatuses) {
+	public void setRequestStatuses(List<RequestStatus> requestStatuses) {
 		this.requestStatuses = requestStatuses;
 	}
 

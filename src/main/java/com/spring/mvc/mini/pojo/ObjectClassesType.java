@@ -1,16 +1,16 @@
 package com.spring.mvc.mini.pojo;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ObjectClassesType {
 
-    private ArrayList<ObjectClass> objectClasses;
+    private List<ObjectClass> objectClasses;
 
-    public ArrayList<ObjectClass> getObjectClasses() {
+    public List<ObjectClass> getObjectClasses() {
         return objectClasses;
     }
 
-    public void setObjectClasses(ArrayList<ObjectClass> objectClasses) {
+    public void setObjectClasses(List<ObjectClass> objectClasses) {
         this.objectClasses = objectClasses;
     }
 

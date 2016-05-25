@@ -1,6 +1,6 @@
 package com.spring.mvc.mini.web;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.mail.Address;
 import javax.mail.internet.InternetAddress;
@@ -51,7 +51,7 @@ public class RequestStatusController {
 	@RequestMapping(params={"mocrid"},method=RequestMethod.GET)
 	public void enrichObjectClassFormWithParam(@RequestParam String mocrid, Model model) {
 		
-		ArrayList<RequestStatus> mrsList = requestStatusJsonParser.readStatus();
+		List<RequestStatus> mrsList = requestStatusJsonParser.readStatus();
 		
 		for(RequestStatus mrs:mrsList){
 			
@@ -69,7 +69,7 @@ public class RequestStatusController {
 						 Model model, RedirectAttributes redirectAttrs) {
 		
 		if(requestStatus.getObjectClassesType() == null){
-			ArrayList<RequestStatus> mrsList = requestStatusJsonParser.readStatus();
+			List<RequestStatus> mrsList = requestStatusJsonParser.readStatus();
 			
 			if (isMocridEquals(requestStatus, model, mrsList)){
 				model.addAttribute(MESSAGE, "SUCCESS:MO CR ID:"+requestStatus.getmocrid()+" is presenting.");
@@ -80,7 +80,7 @@ public class RequestStatusController {
 			}
 		}
 		
-		ArrayList<RequestStatus> requestStatuses =  requestStatusJsonParser.readStatus();
+		List<RequestStatus> requestStatuses =  requestStatusJsonParser.readStatus();
 		
 		int index = 0;
 		for (RequestStatus item:requestStatuses){
@@ -117,7 +117,7 @@ public class RequestStatusController {
 		}
 	}
 
-	private String constructMailText(@ModelAttribute(REQUEST_STATUS) RequestStatus requestStatus, ArrayList<RequestStatus> requestStatuses, int index) {
+	private String constructMailText(@ModelAttribute(REQUEST_STATUS) RequestStatus requestStatus, List<RequestStatus> requestStatuses, int index) {
 		StringBuffer textsb = new StringBuffer();
 		textsb.append("New Comments: \r\n");
 		textsb.append(requestStatus.getComments());
@@ -143,7 +143,7 @@ public class RequestStatusController {
 		return subjectsb.toString();
 	}
 
-	private boolean isMocridEquals(@ModelAttribute(REQUEST_STATUS) RequestStatus requestStatus, Model model, ArrayList<RequestStatus> mrsList) {
+	private boolean isMocridEquals(@ModelAttribute(REQUEST_STATUS) RequestStatus requestStatus, Model model, List<RequestStatus> mrsList) {
 		boolean boo = false;
 		for(RequestStatus mrs:mrsList){
 
