@@ -1,6 +1,6 @@
 package com.spring.mvc.mini.validation;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,9 +14,9 @@ public class ObjectClassDataValidator {
 	@Autowired
 	private ObjectClassXMLPaser objectClassXMLPaser;
 	
-	public void checkData(ArrayList<ObjectClass> objclsListFormIn) throws Exception{
+	public void checkData(List<ObjectClass> objclsListFormIn) throws Exception{
 		
-		ArrayList<ObjectClass> objclsListXmlIn = objectClassXMLPaser.objectClassMapping();
+		List<ObjectClass> objclsListXmlIn = objectClassXMLPaser.objectClassMapping();
 		
 		for (ObjectClass objclsItemFormIn:objclsListFormIn){
 			

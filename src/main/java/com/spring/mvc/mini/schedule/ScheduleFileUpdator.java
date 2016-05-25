@@ -1,8 +1,8 @@
 package com.spring.mvc.mini.schedule;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.mail.Address;
 import javax.mail.internet.InternetAddress;
@@ -45,7 +45,7 @@ public class ScheduleFileUpdator {
 
         LOG.info("Scheduler start at:" + currentTime);
 
-        ArrayList<RequestStatus> requestStatuses = jsonParser.readStatus();
+        List<RequestStatus> requestStatuses = jsonParser.readStatus();
 
         for (RequestStatus status : requestStatuses) {
 
@@ -88,7 +88,7 @@ public class ScheduleFileUpdator {
         return s.toString();
     }
 
-    private void setCommitDateAndStatus(Date currentTime, ArrayList<RequestStatus> requestStatuses, RequestStatus status) {
+    private void setCommitDateAndStatus(Date currentTime, List<RequestStatus> requestStatuses, RequestStatus status) {
         int requestStatusIndex;
         requestStatusIndex = requestStatuses.indexOf(status);
         requestStatuses.get(requestStatusIndex).setCommitDate(currentTime);

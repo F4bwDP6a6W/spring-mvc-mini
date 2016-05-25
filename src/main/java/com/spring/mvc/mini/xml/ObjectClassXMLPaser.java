@@ -20,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class ObjectClassXMLPaser {
@@ -32,7 +33,7 @@ public class ObjectClassXMLPaser {
     @Autowired
     private SVNHandler svnHandler;
 
-    public ArrayList<ObjectClass> objectClassMapping() throws Exception {
+    public List<ObjectClass> objectClassMapping() throws Exception {
 
         LOGGER.info("Start to checkout");
         svnHandler.svnCheckout();
@@ -44,7 +45,7 @@ public class ObjectClassXMLPaser {
 
         Document document = builder.parse(objectClassesFile);
 
-        ArrayList<ObjectClass> objectClasses = new ArrayList<>();
+        List<ObjectClass> objectClasses = new ArrayList<>();
 
         NodeList nodeList = document.getDocumentElement().getChildNodes();
 
