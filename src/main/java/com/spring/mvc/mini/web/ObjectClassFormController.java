@@ -153,7 +153,7 @@ public class ObjectClassFormController {
     }
 
     private String constructMailText(@ModelAttribute("userinfo") UserInfo userinfo, @ModelAttribute("mocrid") String mocrid) {
-        StringBuffer textsb = new StringBuffer();
+        StringBuilder textsb = new StringBuilder();
         textsb.append("Hi,\r\n\r\nThese MO CR's shall be approved if no other comments.\r\nIf you have any comment, please comment on this page:\r\n");
         textsb.append("http://");
         textsb.append(webHostname);
@@ -170,7 +170,7 @@ public class ObjectClassFormController {
     }
 
     private String constructMailSubject(@ModelAttribute("mocrid") String mocrid, List<ObjectClass> objectClasses) {
-        StringBuffer subjectsb = new StringBuffer();
+        StringBuilder subjectsb = new StringBuilder();
         subjectsb.append("Forthcoming approval of MO CR ");
         subjectsb.append(mocrid);
         subjectsb.append(" for ");
@@ -181,7 +181,7 @@ public class ObjectClassFormController {
     }
 
     private void constructDebugMessage(List<ObjectClass> objectClasses) {
-        StringBuffer debugmessage = new StringBuffer();
+        StringBuilder debugmessage = new StringBuilder();
         for (ObjectClass objcls : objectClasses) {
             debugmessage.append(objcls);
         }

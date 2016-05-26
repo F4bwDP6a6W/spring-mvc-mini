@@ -76,7 +76,7 @@ public class ScheduleFileUpdator {
 
     private String appendCommitMessage(RequestStatus status) {
 
-        StringBuffer s = new StringBuffer();
+        StringBuilder s = new StringBuilder();
         s.append("Final approval of MO CR ");
         s.append(status.getmocrid());
         s.append(" for ");
