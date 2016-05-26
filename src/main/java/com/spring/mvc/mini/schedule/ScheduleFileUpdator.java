@@ -88,7 +88,7 @@ public class ScheduleFileUpdator {
         return s.toString();
     }
 
-    private void setCommitDateAndStatus(Date currentTime, List<RequestStatus> requestStatuses, RequestStatus status) {
+    private static void setCommitDateAndStatus(Date currentTime, List<RequestStatus> requestStatuses, RequestStatus status) {
         int requestStatusIndex;
         requestStatusIndex = requestStatuses.indexOf(status);
         requestStatuses.get(requestStatusIndex).setCommitDate(currentTime);

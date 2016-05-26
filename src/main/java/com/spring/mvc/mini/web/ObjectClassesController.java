@@ -124,7 +124,7 @@ public class ObjectClassesController {
         }
     }
 
-    private int isInteger(String s) {
+    private static int isInteger(String s) {
         int i;
         try {
             i = Integer.parseInt(s);
