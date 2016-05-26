@@ -118,7 +118,7 @@ public class RequestStatusController {
 	}
 
 	private String constructMailText(@ModelAttribute(REQUEST_STATUS) RequestStatus requestStatus, List<RequestStatus> requestStatuses, int index) {
-		StringBuffer textsb = new StringBuffer();
+		StringBuilder textsb = new StringBuilder();
 		textsb.append("New Comments: \r\n");
 		textsb.append(requestStatus.getComments());
 		textsb.append(" \r\n");
@@ -136,7 +136,7 @@ public class RequestStatusController {
 	}
 
 	private String constructMailSubject(@ModelAttribute(REQUEST_STATUS) RequestStatus requestStatus) {
-		StringBuffer subjectsb = new StringBuffer();
+		StringBuilder subjectsb = new StringBuilder();
 		subjectsb.append("MO CR:");
 		subjectsb.append(requestStatus.getmocrid());
 		subjectsb.append(" Updated");

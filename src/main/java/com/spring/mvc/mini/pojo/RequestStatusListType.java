@@ -17,7 +17,7 @@ public class RequestStatusListType {
 	@Override
 	public String toString() {
 		
-		StringBuffer s = new StringBuffer();
+		StringBuilder s = new StringBuilder();
 		for (RequestStatus r: requestStatuses){
 			s.append(r);
 		}
