@@ -180,7 +180,7 @@ public class ObjectClassFormController {
         return subjectsb.toString();
     }
 
-    private void constructDebugMessage(List<ObjectClass> objectClasses) {
+    private static void constructDebugMessage(List<ObjectClass> objectClasses) {
         StringBuilder debugmessage = new StringBuilder();
         for (ObjectClass objcls : objectClasses) {
             debugmessage.append(objcls);

@@ -75,14 +75,14 @@ public class ObjectClassXMLPaser {
         return objectClasses;
     }
 
-    private ObjectClass setCommentToObject(Comment node) {
+    private static ObjectClass setCommentToObject(Comment node) {
         ObjectClass objectClass;
         objectClass = new ObjectClass();
         objectClass.setComment(node.getData());
         return objectClass;
     }
 
-    private void setElementToObject(ObjectClass objectClass, Element node) {
+    private static void setElementToObject(ObjectClass objectClass, Element node) {
         objectClass.setId(node.getAttribute("id"));
         objectClass.setAbbreviation(node.getAttribute("abbrev"));
         objectClass.setIntclass(Integer.parseInt(node.getAttribute("intclass")));
@@ -121,7 +121,7 @@ public class ObjectClassXMLPaser {
         }
     }
 
-    private Element getElementOfObjectClass(ObjectClass objectClass, Document document) {
+    private static Element getElementOfObjectClass(ObjectClass objectClass, Document document) {
         Element e = document.createElement("objclass");
         e.setAttribute("id", objectClass.getId());
         e.setAttribute("intclass", String.valueOf(objectClass.getIntclass()));
