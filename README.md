@@ -12,13 +12,13 @@ http://spring.io/guides
 
 -------------------
 在这个项目里主要实现了以下技术：
-* spring-webmvc
-* svnkit
-* jgit
-* javax.mail
-* jasypt
-* dom4j
-* spring scheduler
+* spring-webmvc 实现Model-View-Control
+* svnkit 实现自动checkout checkin SVN
+* jgit 实现自动 pull push GIT
+* javax.mail 实现自动发送IMAP email
+* jasypt 实现用户密码加密
+* dom4j 实现解析XML
+* spring scheduler 实现定时任务
 
 如何运行：
 -------------------
