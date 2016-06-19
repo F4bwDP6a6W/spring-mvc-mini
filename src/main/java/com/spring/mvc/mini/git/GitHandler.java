@@ -82,25 +82,9 @@ public class GitHandler {
             }
 
             LOGGER.info("Json SVN Checked in at " + new Date());
-        } catch (IOException e) {
-            LOGGER.error(e.toString());
-        } catch (UnmergedPathsException e) {
-            LOGGER.error(e.toString());
-        } catch (WrongRepositoryStateException e) {
-            LOGGER.error(e.toString());
-        } catch (ConcurrentRefUpdateException e) {
-            LOGGER.error(e.toString());
-        } catch (NoFilepatternException e) {
-            LOGGER.error(e.toString());
-        } catch (AbortedByHookException e) {
-            LOGGER.error(e.toString());
-        } catch (NoHeadException e) {
-            LOGGER.error(e.toString());
-        } catch (InvalidRemoteException e) {
-            LOGGER.error(e.toString());
-        } catch (TransportException e) {
-            LOGGER.error(e.toString());
-        } catch (NoMessageException e) {
+        } catch (IOException | UnmergedPathsException | WrongRepositoryStateException | ConcurrentRefUpdateException
+                | NoFilepatternException | AbortedByHookException | NoHeadException | InvalidRemoteException
+                | TransportException | NoMessageException e) {
             LOGGER.error(e.toString());
         } catch (GitAPIException e) {
             LOGGER.error(e.toString());
