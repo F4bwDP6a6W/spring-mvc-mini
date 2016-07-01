@@ -14,6 +14,8 @@ import org.tmatesoft.svn.core.wc.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 
@@ -74,7 +76,7 @@ public class SVNHandler {
                     SVNDepth.INFINITY, true, outputStream, null);
 
             if (outputStream.size() > 0) {
-                commitClient.doCommit(xmlfilearray, false, outputStream.toString(), false, true);
+                commitClient.doCommit(xmlfilearray, false, outputStream.toString("UTF-8"), false, true);
                 LOG.info("XML Checked in at " + new Date());
             }
 
@@ -82,11 +84,11 @@ public class SVNHandler {
                     SVNDepth.INFINITY, true, outputStream, null);
 
             if (outputStream.size() > 0) {
-                commitClient.doCommit(jsonfilearray, false, outputStream.toString(), false, true);
+                commitClient.doCommit(jsonfilearray, false, outputStream.toString("UTF-8"), false, true);
                 LOG.info("Json SVN Checked in at " + new Date());
             }
 
-        } catch (SVNException e) {
+        } catch (SVNException|UnsupportedEncodingException e) {
             LOG.error(e.toString());
         } finally {
             ourClientManager.dispose();
