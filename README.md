@@ -26,7 +26,7 @@ http://spring.io/guides
 在Windows的CMD：
 
     $ cd spring-mvc-mini
-    $ mvn tomcat7:run [-Dmaven.tomcat.port=<port no.>] (In case 8080 is busy] 
+    $ mvn tomcat7:run 
 
 通过浏览器打开：http://localhost:8080/spring-mvc-mini
 
