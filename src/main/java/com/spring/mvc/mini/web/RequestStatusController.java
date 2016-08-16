@@ -126,7 +126,7 @@ public class RequestStatusController {
 			textsb.append(requestStatus.getObjectClassesType().toString());
 		}
 
-		textsb.append("http://localhost:8080/spring-mvc-mini/requeststatus?mocrid=");
+		textsb.append("http://localhost:8080/spring-mvc-test/requeststatus?mocrid=");
 		textsb.append(requestStatus.getmocrid());
 		textsb.append(" \r\n");
 		textsb.append(" \r\n");

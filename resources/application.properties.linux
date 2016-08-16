@@ -8,9 +8,9 @@ svn.rep.url=svn repo link
 svn.username=testuser
 svn.password=spring125
 
-path.rep=/opt/web/spring-mvc-mini/resources/svn_temp
-path.xml=/opt/web/spring-mvc-mini/resources/svn_temp/objectclasses.xml
-path.json=/opt/web/spring-mvc-mini/resources/svn_temp/morstatus.json
+path.rep=/opt/web/spring-mvc-test/resources/svn_temp
+path.xml=/opt/web/spring-mvc-test/resources/svn_temp/objectclasses.xml
+path.json=/opt/web/spring-mvc-test/resources/svn_temp/morstatus.json
 
 web.hostname=localhost
 

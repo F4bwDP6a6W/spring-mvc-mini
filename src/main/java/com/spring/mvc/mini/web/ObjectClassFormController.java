@@ -155,7 +155,7 @@ public class ObjectClassFormController {
         textsb.append("Hi,\r\n\r\nThese MO CR's shall be approved if no other comments.\r\nIf you have any comment, please comment on this page:\r\n");
         textsb.append("http://");
         textsb.append(webHostname);
-        textsb.append(":8080/spring-mvc-mini/requeststatus?mocrid=");
+        textsb.append(":8080/spring-mvc-test/requeststatus?mocrid=");
         textsb.append(mocrid);
         textsb.append("\r\nor mailto:");
         textsb.append(userinfo.getEmail());
@@ -163,7 +163,7 @@ public class ObjectClassFormController {
         textsb.append("The request will be committed in 5 days.\r\n\r\nThanks.\r\n");
         textsb.append("http://");
         textsb.append(webHostname);
-        textsb.append(":8080/spring-mvc-mini/");
+        textsb.append(":8080/spring-mvc-test/");
         return textsb.toString();
     }
 

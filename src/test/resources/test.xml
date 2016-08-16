@@ -13,7 +13,7 @@
 	<context:annotation-config/>
 	<context:component-scan base-package="com.spring.mvc.mini" />
 	
-	<!--<context:property-placeholder location="file:/opt/web/spring-mvc-mini/resources/application.properties"/>--> 
+	<!--<context:property-placeholder location="file:/opt/web/spring-mvc-test/resources/application.properties"/>-->
 	<context:property-placeholder location="file:resources/application.properties"/>
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources/ directory -->
